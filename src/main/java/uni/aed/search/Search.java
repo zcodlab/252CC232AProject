@@ -36,6 +36,19 @@ public class Search {
             medio=NO_ENCONTRADO;        
         return medio;
     }
+
+    @Override
+    public String toString() {
+        if(X==null ||X.length==0) return "";
+        StringBuilder str=new StringBuilder();
+        for(Integer x:X){
+            if(str.isEmpty())
+                str.append(x);
+            else
+                str.append(","+x);
+        }
+        return str.toString();
+    }
     
     
 }

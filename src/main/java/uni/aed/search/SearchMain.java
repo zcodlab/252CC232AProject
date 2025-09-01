@@ -3,7 +3,7 @@ package uni.aed.search;
 public class SearchMain {    
     public static void main(String[] args){
         SearchMain searchMain=new SearchMain();
-        //searchMain.testSearchLineal();
+        searchMain.testSearchLineal();
         searchMain.testSearchBinaria();
     }
     private void testSearchLineal(){
@@ -11,10 +11,7 @@ public class SearchMain {
         Integer X[]={15,1,25,60,69,86,3,78,2,10};
         s.setX(X);
         //visualizando X
-        System.out.println("El contenido del arreglo es:");
-        for(Integer x:s.getX())
-            System.out.print(x+",");
-        System.out.println("");
+        System.out.println("El contenido del arreglo es:"+s.toString());                
         //Busqueda Satisfactoria
         int valorB=69;
         int result=s.searchLineal(valorB);
@@ -32,10 +29,11 @@ public class SearchMain {
     }
     private void testSearchBinaria(){
         Search s=new Search();
-        //Arreglo ordenado
-        //Integer X[]={1,2,3,10,15,25,60,69,78,86};
+        //Arreglo ordenado        
         Integer X[]={5,12,17,23,38,44,77,84,90};
         s.setX(X);
+        //visualizando el arreglo
+        System.out.println("El contenido del arreglo es:"+s.toString());                
         //Busqueda Satisfactoria
         int valorB=44;
         int result=s.searchBinaria(valorB);
