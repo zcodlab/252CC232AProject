@@ -8,31 +8,37 @@ public class MaxMinMain {
     
     public static void main(String[] args){
         MaxMinMain maxMinMain=new MaxMinMain();
-        maxMinMain.testMaxMin();
+        //maxMinMain.testMaxMin();
+        maxMinMain.menu();
     }
     
     private void menu(){
         int opcion=1;
         String Rpta="S";
         String SEPARADOR="\n";
-        do{
-            System.out.print("Algoritmos Maximo-Minimo"+SEPARADOR+
-                    "1.- Carga de Datos en Array "+SEPARADOR+
-                    "2.- Visualizar Array "+SEPARADOR+
-                    "3.- Determinar Maximo-Minimo "+SEPARADOR+
-                    "4.- Salir "+SEPARADOR+
-                    "Elija una opcion:");
-            opcion=scr.nextInt();
-            switch(opcion)
-            {
-                case 1->{X=carga();}
-                case 2->{visualizar(X);}
-                case 3->{getMaxMin(X);}
-                default-> {break;}                
-            }
-            System.out.print("Para continuar con la operaciones pulse S, para finalizar pulse N");
-            Rpta=scr.next().toUpperCase();            
-        }while(Rpta.equals("S")==true);
+        try{
+            do{
+                System.out.print("Algoritmos Maximo-Minimo"+SEPARADOR+
+                        "1.- Carga de Datos en Array "+SEPARADOR+
+                        "2.- Visualizar Array "+SEPARADOR+
+                        "3.- Determinar Maximo-Minimo "+SEPARADOR+
+                        "4.- Salir "+SEPARADOR+
+                        "Elija una opcion:");
+                opcion=scr.nextInt();
+                switch(opcion)
+                {
+                    case 1->{X=carga();}
+                    case 2->{visualizar(X);}
+                    case 3->{getMaxMin(X);}
+                    default-> {break;}                
+                }
+                System.out.print("Para continuar con la operaciones pulse S, para finalizar pulse N: ");
+                Rpta=scr.next().toUpperCase();            
+            }while(Rpta.equals("S")==true);
+            scr.close();
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
     }
     private Integer[] carga(){
         System.out.print("Ingrese el tamaño del Array:");
@@ -54,7 +60,11 @@ public class MaxMinMain {
         
     }
     private void getMaxMin(Integer[] X){
-        
+        if(validar(X)==-1) return;
+        MaxMin mm=new MaxMin();
+        System.out.println("");
+        System.out.println("El maximo valor es: "+mm.getMaxValor(X));
+        System.out.println("El maximo valor es: "+mm.getMinValor(X));
     }
     
     private int validar(Integer[] X){
