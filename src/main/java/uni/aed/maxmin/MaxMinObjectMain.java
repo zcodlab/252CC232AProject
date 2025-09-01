@@ -31,4 +31,6 @@ public class MaxMinObjectMain {
         System.out.println("El maximo valor es:"+ mm.getMaxValor(X,null));
         System.out.println("El minimo valor es:"+ mm.getMinValor(X,null)); 
     }
+    private void testMaxMinPersona(){
+    }
 }
