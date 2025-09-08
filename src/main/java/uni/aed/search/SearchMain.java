@@ -3,7 +3,7 @@ package uni.aed.search;
 public class SearchMain {    
     public static void main(String[] args){
         SearchMain searchMain=new SearchMain();
-        searchMain.testSearchLineal();
+        //searchMain.testSearchLineal();
         searchMain.testSearchBinaria();
     }
     private void testSearchLineal(){
@@ -20,7 +20,7 @@ public class SearchMain {
         else
             System.out.println("El valor buscado "+valorB+" se encontro en la posicion "+ result);        
         //Busqueda Insatisfactoria
-        valorB=87;
+        valorB=87;        
         result=s.searchLineal(valorB);
         if(result==-1)
             System.out.println("El valor buscado "+valorB+" no existe");
@@ -41,13 +41,21 @@ public class SearchMain {
             System.out.println("El valor buscado "+valorB+" no existe");
         else
             System.out.println("El valor buscado "+valorB+" se encontro en la posicion "+ result);        
+        //invocando el analisis de las comparaciones
+        System.out.println("La busqueda binaria realizo "+ s.getnComp()+ " comparaciones");
+        System.out.println(s.getAnalisis());        
+        
         //Busqueda Insatisfactoria
         valorB=45;
+        s.clear();
         result=s.searchBinaria(valorB);
         if(result==-1)
             System.out.println("El valor buscado "+valorB+" no existe");
         else
             System.out.println("El valor buscado "+valorB+" se encontro en la posicion "+ result);        
+        //invocando el analisis de las comparaciones
+        System.out.println("La busqueda binaria realizo "+ s.getnComp()+ " comparaciones");
+        System.out.println(s.getAnalisis());        
         
     }
 }
