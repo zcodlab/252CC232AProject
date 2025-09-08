@@ -12,35 +12,39 @@ public class SortMain {
         sortMain.menu();        
     }
     private void menu(){
-        int opcion=1;
-        char Rpta='S';
+        int opcion=1;        
         String SEPARADOR="\n";
         try{
             do{
                 System.out.print("Algoritmos Ordenamiento"+SEPARADOR+
                         "1.- Carga de Datos en Array "+SEPARADOR+
-                        "2.- Visualizar Array "+SEPARADOR+
-                        "3.- Ordenar - metodo de Seleccion "+SEPARADOR+
-                        "4.- Salir "+SEPARADOR+
+                        "2.- Carga de Datos Duplicados en Array "+SEPARADOR+
+                        "3.- Visualizar Array "+SEPARADOR+
+                        "4.- Ordenar - metodo de Seleccion "+SEPARADOR+
+                        "5.- Salir "+SEPARADOR+
                         "Elija una opcion:");
                 opcion=scr.nextInt();
                 switch(opcion)
                 {
                     case 1->{carga();visualizar();}
-                    case 2->{visualizar();}
-                    case 3->{testSelectionSort();}
+                    case 2->{cargaDuplicados();visualizar();}
+                    case 3->{visualizar();}
+                    case 4->{testSelectionSort();}
                     default-> {break;}                
-                }
-                System.out.print("Para continuar con la operaciones pulse S, para finalizar pulse N: ");
-                Rpta=scr.next().toUpperCase().charAt(0);            
-            }while(Rpta=='S');
+               }
+            }while(opcion!=5);
             scr.close();
-        }catch(Exception ex){
-            System.out.println(ex.toString());
+        }catch(Exception e){
+            System.out.println("Error presentado "+ e.getMessage());
         }
     }
     private void carga(){
-        Integer X[]={5,14,24,39,43,65,84,45};
+        Integer X[]={5,14,24,39,43,65,84,45};        
+        dataOrigen=X.clone();
+        sort.setX(X);
+    }
+    private void cargaDuplicados(){
+        Integer X[]={5,14,24,14,43,5,84,45};        
         dataOrigen=X.clone();
         sort.setX(X);
     }

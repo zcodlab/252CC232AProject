@@ -1,30 +1,65 @@
 package uni.aed.sort;
+import java.util.concurrent.TimeUnit;
 
 public class Sort {
     private Integer[] X;
+    private int nComp=0;    //# Comparaciones
+    private int nInt=0;     //# Intercambios
+    private long tEjec=0;   //tiempo de ejecucion
 
     public void setX(Integer[] X) {
         this.X = X;
+        clear();        
     }
 
     public Integer[] getX() {
         return X;
     }
+
+    public void settEjec(long tEjec) {
+        this.tEjec = tEjec;
+    }
+
+    public long gettEjec() {
+        return tEjec;
+    }
+
+    public int getnComp() {
+        return nComp;
+    }
+
+    public int getnInt() {
+        return nInt;
+    }
+    
+    
+    private void clear(){
+        this.nComp=0;    
+        this.nInt=0;     
+        this.tEjec=0;   
+    }
     
     public void selectionSort(){
         int startIndex,minIndex,lenght,temp;
         lenght=X.length;
+        clear();
+        long tIni=System.nanoTime();
         for(startIndex=0;startIndex<=lenght-2;startIndex++){
             minIndex=startIndex;
             //buscamos el valor mas pequeño de la coleccion
-            for(int i=startIndex+1;i<=lenght-1;i++)
+            for(int i=startIndex+1;i<=lenght-1;i++){
                 //realizamos la comparacion
+                nComp++;
                 if(X[i]<X[minIndex]) minIndex=i;
+            }
             //intercambio
             temp=X[startIndex];
             X[startIndex]=X[minIndex];
             X[minIndex]=temp;
-        }        
+            nInt++;
+        }
+        long tFin=System.nanoTime();
+        this.settEjec(tFin-tIni);        
     }
     public void heapSort(){
         heapSortConstruct();//fase1: construccion
@@ -79,7 +114,9 @@ public class Sort {
             else
                 str.append(","+x);
         }
-        return str.toString();
+        return str.toString()+"\n nComp= "+nComp+" nInt= "+ 
+                nInt +" tEjec(ns)= "+tEjec 
+                +" tEjec(ms)= "+ TimeUnit.NANOSECONDS.toMillis(tEjec);
     }
     
 }
