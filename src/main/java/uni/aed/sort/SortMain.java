@@ -20,22 +20,26 @@ public class SortMain {
                 System.out.print("Algoritmos Ordenamiento"+SEPARADOR+
                         "1.- Carga de Datos en Array "+SEPARADOR+
                         "2.- Carga de Datos Duplicados en Array "+SEPARADOR+
-                        "3.- Carga Aleatoria en Array "+SEPARADOR+
-                        "4.- Visualizar Array "+SEPARADOR+
-                        "5.- Ordenar - metodo de Seleccion "+SEPARADOR+
-                        "6.- Salir "+SEPARADOR+
+                        "3.- Carga Personalizada en Array "+SEPARADOR+
+                        "4.- Carga Aleatoria en Array "+SEPARADOR+
+                        "5.- Visualizar Array "+SEPARADOR+
+                        "6.- Ordenar - metodo de Seleccion "+SEPARADOR+
+                        "7.- Ordenar - metodo HeapSort "+SEPARADOR+
+                        "8.- Salir "+SEPARADOR+
                         "Elija una opcion:");
                 opcion=scr.nextInt();
                 switch(opcion)
                 {
                     case 1->{carga();visualizar();}
                     case 2->{cargaDuplicados();visualizar();}
-                    case 3->{cargaAleatoria();visualizar();}
-                    case 4->{visualizar();}
-                    case 5->{testSelectionSort();}
+                    case 3->{cargaPersonalizada();visualizar();}
+                    case 4->{cargaAleatoria();visualizar();}
+                    case 5->{visualizar();}
+                    case 6->{testSelectionSort();}
+                    case 7->{testHeapSort();}
                     default-> {break;}                
                }
-            }while(opcion!=6);
+            }while(opcion!=8);
             scr.close();
         }catch(Exception e){
             System.out.println("Error presentado "+ e.getMessage());
@@ -50,6 +54,17 @@ public class SortMain {
         Integer X[]={5,14,24,14,43,5,84,45};        
         dataOrigen=X.clone();
         sort.setX(X);
+    }
+    private void cargaPersonalizada(){
+        System.out.println("Ingrese el tamaño del array ");
+        int N=scr.nextInt();
+        Integer[] X=new Integer[N];
+        for(int i=0;i<X.length;i++){
+            System.out.print("Ingrese el valor X["+i+"]= ");
+            X[i]=scr.nextInt();
+        }
+        dataOrigen=X.clone();
+        sort.setX(X);        
     }
     private void cargaAleatoria(){       
         System.out.println("Carga Aleatoria");
@@ -75,6 +90,11 @@ public class SortMain {
     private void testSelectionSort(){
         visualizarDataOrigen();//setear la data origen y visualizarla
         sort.selectionSort();//invocamos al algoritmo de ordenamiento
+        System.out.println(sort.toString());//visualizamos el resultado
+    }
+    private void testHeapSort(){
+        visualizarDataOrigen();//setear la data origen y visualizarla
+        sort.heapSort();//invocamos al algoritmo de ordenamiento
         System.out.println(sort.toString());//visualizamos el resultado
     }
 }

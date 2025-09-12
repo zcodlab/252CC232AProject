@@ -68,7 +68,7 @@ public class Sort {
     private void heapSortConstruct(){
         int current=0, maxChildIndex;
         boolean hecho;
-        for(int i=(X.length-2)/2; i>=0;i--){
+        for(int i=(X.length/2)-1; i>=0;i--){
             current=i;
             hecho=false;
             while(!hecho){//2*i+1,2*i+2
@@ -89,9 +89,13 @@ public class Sort {
     private int heapSortMaxChild(int loc,int end){
         int result, izq,der;
         izq=2*loc+1;//indice impar
-        der=2*loc+2;//indice par        
+        der=2*loc+2;//indice par     
+        if(der<=end && X[izq]<X[der])
+            result=der;
+        else
+            result=izq;
         
-        return 0;//incompleto
+        return result;  //retornando la pos del hijo que tiene el maximo valor
     }
     
     private void intercambio(int p,int q){
@@ -101,7 +105,29 @@ public class Sort {
     }
             
     private void heapSortExtract(){
-        
+        Integer[] Y=new Integer[X.length];
+        int current, maxChildIndex;
+        boolean hecho;
+        for(int i=X.length-1;i>=0;i--){
+            Y[i]=X[0];      //consignando en Y el root del heap(X)
+            X[0]=X[i];      //reemplazando el root con el ult.elemento del heap
+            //reconstruir el heap
+            current=0;
+            hecho=false;
+            while(!hecho){
+                if(2*current + 1 > i )//validando la restriccion estructural
+                    hecho=true;
+                else{ //verificamos si el nodo actual tiene al menos un hijo
+                    maxChildIndex=heapSortMaxChild(current,i);
+                    if(X[current]<X[maxChildIndex]){
+                        intercambio(current,maxChildIndex);
+                        current=maxChildIndex;
+                    }else
+                        hecho=true;
+                }
+            }//end while
+        }//end for
+        this.X=Y;
     }
 
     @Override
