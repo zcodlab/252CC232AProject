@@ -61,6 +61,70 @@ public class Sort {
         long tFin=System.nanoTime();
         this.settEjec(tFin-tIni);        
     }
+    
+    //metodo de ordenamiento de la burbuja
+    public void bubbleSort(){
+        int temp,bottom;
+        boolean exchange=true;
+        bottom=X.length-2;
+        clear();
+        long tIni=System.nanoTime();
+        while(exchange){
+            exchange=false;
+            for(int i=0;i<=bottom;i++){
+                nComp++;
+                if(X[i]>X[i+1]){
+                    temp=X[i];
+                    X[i]=X[i+1];
+                    X[i+1]=temp;
+                    exchange=true;
+                    nInt++;
+                }                    
+            }
+            bottom--;            
+        }
+        long tFin=System.nanoTime();                
+        this.settEjec(tFin-tIni);
+    }
+    
+    public void insercionSort(){
+        int aux,k;
+        boolean sw=false;
+        for(int i=1;i<X.length;i++){
+            aux=X[i];
+            k=i-1;
+            sw=false;
+            while(!sw && k>=0){
+                if(aux<X[k])
+                {
+                   X[k+1]=X[k];
+                   k--;
+                }
+                else
+                    sw=true;
+            }
+            X[k+1]=aux;
+        }//end for        
+    }
+    public void insercionBinariaSort(){
+        int aux,p,u,c;
+        for(int i=1;i<X.length;i++){
+            aux=X[i];
+            p=0;
+            u=i-1;
+            while(p<=u){
+                c=(p+u)/2;
+                if(aux<X[c])
+                    u=c-1;
+                else
+                    p=c+1;
+            }
+            for(int k=i-1;k>=p;k--)
+                X[k+1]=X[k];
+            X[p]=aux;
+        }//end for externo
+    }    
+    
     public void heapSort(){
         heapSortConstruct();//fase1: construccion
         heapSortExtract();//fase2: extraccion        
@@ -128,6 +192,71 @@ public class Sort {
             }//end while
         }//end for
         this.X=Y;
+    }
+    
+    public void quickSort(int start, int end) {
+        if (start < end) {
+            int pIndex = quickSortPartition(start, end);
+            quickSort(start, pIndex - 1);
+            quickSort(pIndex + 1, end);
+        }        
+    }
+
+    private int quickSortPartition(int start, int end) {
+        int pivot = X[end];
+        int pIndex = start;
+        for (int i = start; i < end; i++) {
+            if (X[i] <= pivot) {
+                intercambio(i, pIndex);
+                pIndex++;
+            }
+        }
+        intercambio(pIndex, end);
+        return pIndex;
+    }   
+            
+    public Integer[] mergeSort(Integer[] X)
+    {
+        int n=X.length;
+        if(n < 2) return X;
+        int mid = n/2;
+        Integer[] left=new Integer[mid];
+        Integer[] right=new Integer[n - mid];
+        for(int i=0;i<mid;i++)
+            left[i] = X[i];
+        for(int i=mid;i<n;i++)
+            right[i - mid] = X[i];        
+        mergeSort(left);
+        mergeSort(right);
+        merge(X,left,right );
+        this.X=X;
+        return X;
+    }
+    private void merge(Integer[] X,Integer[] left,Integer[] right){
+        int nL=left.length;
+        int nR=right.length;
+        int i=0,j=0,k=0;
+        while(i<nL && j<nR){
+            if(left[i] <= right[j]){
+                X[k]=left[i];
+                i++;
+            }else{
+                X[k]=right[j];
+                j++;                
+            }
+            k++;                
+        }
+        while(i<nL){
+            X[k]=left[i];
+            i++;
+            k++;
+        }
+        while(j<nR){
+            X[k]=right[j];
+            j++;
+            k++;
+        }
+        
     }
 
     @Override

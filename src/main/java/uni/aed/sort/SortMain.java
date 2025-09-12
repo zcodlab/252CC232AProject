@@ -24,8 +24,13 @@ public class SortMain {
                         "4.- Carga Aleatoria en Array "+SEPARADOR+
                         "5.- Visualizar Array "+SEPARADOR+
                         "6.- Ordenar - metodo de Seleccion "+SEPARADOR+
-                        "7.- Ordenar - metodo HeapSort "+SEPARADOR+
-                        "8.- Salir "+SEPARADOR+
+                        "7.- Ordenar - metodo Burbuja "+SEPARADOR+
+                        "8.- Ordenar - metodo Insercion "+SEPARADOR+
+                        "9.- Ordenar - metodo Insercion Binaria "+SEPARADOR+
+                        "10.- Ordenar - metodo HeapSort "+SEPARADOR+
+                        "11.- Ordenar - metodo QuickSort "+SEPARADOR+
+                        "12.- Ordenar - metodo MergeSort "+SEPARADOR+
+                        "13.- Salir "+SEPARADOR+
                         "Elija una opcion:");
                 opcion=scr.nextInt();
                 switch(opcion)
@@ -36,10 +41,15 @@ public class SortMain {
                     case 4->{cargaAleatoria();visualizar();}
                     case 5->{visualizar();}
                     case 6->{testSelectionSort();}
-                    case 7->{testHeapSort();}
+                    case 7->{testBubbleSort();}
+                    case 8->{testInsercionSort();}
+                    case 9->{testInsercionBinariaSort();}
+                    case 10->{testHeapSort();}
+                    case 11->{testQuickSort();}
+                    case 12->{testMergeSort();}                    
                     default-> {break;}                
                }
-            }while(opcion!=8);
+            }while(opcion!=13);
             scr.close();
         }catch(Exception e){
             System.out.println("Error presentado "+ e.getMessage());
@@ -92,9 +102,38 @@ public class SortMain {
         sort.selectionSort();//invocamos al algoritmo de ordenamiento
         System.out.println(sort.toString());//visualizamos el resultado
     }
+    
+    private void testBubbleSort(){                
+        visualizarDataOrigen();
+        sort.bubbleSort();
+        System.out.println(sort.toString());        
+    }
+    
+    private void testInsercionSort(){                 
+        visualizarDataOrigen();
+        sort.insercionSort();                
+        System.out.println(sort.toString());        
+    }
+    private void testInsercionBinariaSort(){      
+        visualizarDataOrigen();        
+        sort.insercionBinariaSort();        
+        System.out.println(sort.toString());        
+    }
+    
     private void testHeapSort(){
         visualizarDataOrigen();//setear la data origen y visualizarla
         sort.heapSort();//invocamos al algoritmo de ordenamiento
         System.out.println(sort.toString());//visualizamos el resultado
     }
+    
+    private void testQuickSort(){          
+        visualizarDataOrigen();        
+        sort.quickSort(0,sort.getX().length-1);
+        System.out.println(sort.toString()+ ",");   
+    }          
+    private void testMergeSort(){          
+        visualizarDataOrigen();        
+        sort.mergeSort(sort.getX());
+        System.out.println(sort.toString()+ ",");   
+    }         
 }
