@@ -53,10 +53,10 @@ public class Sort {
                 if(X[i]<X[minIndex]) minIndex=i;
             }
             //intercambio
-            temp=X[startIndex];
-            X[startIndex]=X[minIndex];
-            X[minIndex]=temp;
-            nInt++;
+            if (minIndex!=startIndex){
+                intercambio(startIndex,minIndex);
+                nInt++;
+            }
         }
         long tFin=System.nanoTime();
         this.settEjec(tFin-tIni);        

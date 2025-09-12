@@ -77,10 +77,14 @@ public class SortMain {
         sort.setX(X);        
     }
     private void cargaAleatoria(){       
-        System.out.println("Carga Aleatoria");
-        int N=5000;
         int min=0;
-        int max=20000;
+        //int N=5000;        
+        //int max=20000;        
+        System.out.println("Carga Aleatoria");
+        System.out.println("Ingrese el tamaño del array ");
+        int N=scr.nextInt();
+        System.out.println("Ingrese el rango superior de los elementos aleatorios del array ");
+        int max=scr.nextInt();        
         Integer[] X=new Integer[N];
         Random random=new Random();
         for(int i=0;i<X.length;i++)
