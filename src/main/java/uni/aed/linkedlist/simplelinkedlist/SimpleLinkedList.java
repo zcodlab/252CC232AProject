@@ -17,7 +17,7 @@ public class SimpleLinkedList {
         Nodo newNodo=new Nodo(data);
         Nodo current;
         int index=0;
-        if(position<0 || position>lenght)
+        if(position<0 || position >(lenght-1))
             return OUT_OF_LIMIT;
         if(position==0)
             addFirst(newNodo.getData());
