@@ -166,9 +166,33 @@ public class Sort {
         int temp=X[p];
         X[p]=X[q];
         X[q]=temp;
+    }  
+
+    //Solucion 1PC: Ejercicio2        
+    private void heapSortExtract(){        
+        int current, maxChildIndex=0;
+        boolean hecho;
+        for(int i=X.length-1;i>0;i--){
+            intercambio(0, i);  
+            //reconstruir el heap
+            current=0;
+            hecho=false;
+            while(!hecho){
+                if(2*current + 1 > (i-1) )//validando la restriccion estructural
+                    hecho=true;
+                else{ //verificamos si el nodo actual tiene al menos un hijo
+                    maxChildIndex=heapSortMaxChild(current,i-1);
+                    if(X[current]<X[maxChildIndex]){
+                        intercambio(current,maxChildIndex);
+                        current=maxChildIndex;
+                    }else
+                        hecho=true;
+                }
+            }//end while
+        }//end for        
     }
-            
-    private void heapSortExtract(){
+    //version origen usando 2 arreglos
+    private void heapSortExtractOrigen(){
         Integer[] Y=new Integer[X.length];
         int current, maxChildIndex;
         boolean hecho;
