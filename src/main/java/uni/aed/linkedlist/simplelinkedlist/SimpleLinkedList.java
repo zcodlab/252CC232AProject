@@ -4,7 +4,7 @@ public class SimpleLinkedList {
     private static final int OUT_OF_LIMIT=-1;
     private static final int NOT_FOUND=-1;
     private static final int EXITO=1;
-    private Nodo head;
+    private Nodo head;          //cabecera de lista
     private int lenght=0;
     
     public void addFirst(int data){
