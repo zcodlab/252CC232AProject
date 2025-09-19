@@ -77,6 +77,29 @@ public class SimpleLinkedList {
             lenght--;
         }            
     }
+    //Metodo de Ordenamiento Burbuja
+    public void bubbleSort(){
+        if(head==null) return;
+        boolean swapped;
+        Nodo actual;
+        Nodo ultimo=null;
+        do{
+            swapped=false;
+            actual=head;
+            while(actual.getNext()!=ultimo){
+                if(actual.getData()>actual.getNext().getData()){
+                    //intercambiar
+                    int temp=actual.getData();
+                    actual.setData(actual.getNext().getData());
+                    actual.getNext().setData(temp);
+                    swapped=true;
+                }
+                actual=actual.getNext();                
+            }
+            ultimo=actual;//despues de cada pasada , el mayor valor queda al final de la lista
+        }while(swapped);
+    }
+    
     
     public void clear(){
         head=null;

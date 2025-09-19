@@ -47,8 +47,10 @@ public class SimpleLinkedListMain {
         else
             System.out.println("El elemento se ubico en la posicion "+result);
         
-        
-        
+        System.out.println("Ordenando los elementos de la lista");
+        lista.bubbleSort();
+        System.out.println("Visualizando la lista enlazada");
+        System.out.println(lista.toString());
     }
     
 }
