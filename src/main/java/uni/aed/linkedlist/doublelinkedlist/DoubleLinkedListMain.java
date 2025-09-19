@@ -33,5 +33,17 @@ public class DoubleLinkedListMain {
             System.out.println("El elemento NO se ubico en la lista");
         else
             System.out.println("El elemento se ubico en la posicion "+result);
+        
+        System.out.println("Ordenando los elementos de la lista");
+        lista.bubbleSort();
+        System.out.println("Visualizando la lista enlazada");
+        System.out.println(lista.toString());
+        
+        System.out.println("Realizando Busqueda Mejorada el elemento 30");
+        result=lista.searchMejorado(30);
+        if(result==NOT_FOUND)
+            System.out.println("El elemento NO se ubico en la lista");
+        else
+            System.out.println("El elemento se ubico en la posicion "+result);
     }
 }

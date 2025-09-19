@@ -66,7 +66,54 @@ public class DoubleLinkedList {
         }
         return NOT_FOUND;
     }
-     public void clear(){
+    /*
+    En listas doblemente enlazadas se puede aprovechar ambos punteros(head y ultimo)
+    para buscar desde los dos extremos al mismo tiempo
+    Esto reduce el numero de comparaciones casi a la mitad en el peor caso
+    */
+    public int searchMejorado(int data){
+        DNodo izq=head;
+        DNodo der=ultimo;
+        int leftIndex=0;
+        int rightIndex=size()-1;
+        while(izq!=null && der!=null && leftIndex<=rightIndex){
+            if(izq.getData()==data)
+                return leftIndex;
+            if(der.getData()==data)
+                return rightIndex;
+            
+            izq=izq.getNext();
+            der=der.getPrev();
+            leftIndex++;
+            rightIndex++;
+        }
+        return NOT_FOUND;
+    }
+    
+     //Metodo de Ordenamiento Burbuja
+    public void bubbleSort(){
+        if(head==null) return;
+        boolean swapped;
+        DNodo actual;
+        DNodo ultimo=null;
+        do{
+            swapped=false;
+            actual=head;
+            while(actual.getNext()!=ultimo){
+                if(actual.getData()>actual.getNext().getData()){
+                    //intercambiar
+                    int temp=actual.getData();
+                    actual.setData(actual.getNext().getData());
+                    actual.getNext().setData(temp);
+                    swapped=true;
+                }
+                actual=actual.getNext();                
+            }
+            ultimo=actual;//despues de cada pasada , el mayor valor queda al final de la lista
+        }while(swapped);
+    }    
+    
+    public void clear(){
         head=null;
         ultimo=null;
         lenght=0;        
@@ -79,7 +126,7 @@ public class DoubleLinkedList {
     public int size(){
         return lenght;
     }
-    
+   
     @Override
     public String toString() {
         StringBuilder str=new StringBuilder();
