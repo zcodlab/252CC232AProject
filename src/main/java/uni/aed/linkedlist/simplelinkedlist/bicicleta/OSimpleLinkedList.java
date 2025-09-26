@@ -66,6 +66,25 @@ public class OSimpleLinkedList {
             return NOT_FOUND;
     }
     
+    //Solucion Cap16.Ej7
+    public String searchAll(Object data){
+        StringBuilder str=new StringBuilder();
+        ONodo current=head;
+        int index=0;
+        while(current!=null){
+            if( ((Comparable)current.getData()).compareTo(data)==0){
+                if(!str.isEmpty())
+                    str.append(",");
+                str.append(index);//descargamos las posiciones que corresponden al mismo propietario
+            }
+            current=current.getNext();
+            index++;
+        }
+        if(str.isEmpty())
+            str.append(NOT_FOUND);
+        return str.toString();
+    }
+    
     public void remove(Object data){
         if(head==null)
             return;
