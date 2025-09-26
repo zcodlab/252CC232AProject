@@ -22,8 +22,21 @@ public class CircleLinkedList {
         newNodo.setNext(head);//por ser circular, debe apuntar al head
         lenght++;
     }
+    public boolean searchJ(int key){
+        if(head==null)
+            return false;
+        Nodo current=head;
+        do{
+            if(current.getData()==key)
+                return true;
+            current=current.getNext();
+        }while(current!=head);
+        return false;
+    }
     
     public int search(int key){
+        if(head==null)
+            return NOT_FOUND;
         Nodo current=head;
         int index=0;
         do{
@@ -57,6 +70,29 @@ public class CircleLinkedList {
             current.setNext(current.getNext().getNext());
             lenght--;
         }            
+    }
+    //Metodo remove para resolver el problema de Joshepus
+    public int remover(int n){
+        if(head==null || n<=0)
+            return OUT_OF_LIMIT;
+        head=remover(head,n);
+        return head.getData();
+    }
+    //Metodo recursivo para resolver el problema de Joshepus
+    private Nodo remover(Nodo head,int n){
+        if(head==null || head.getNext()==head)
+            return head; //caso base
+        Nodo current=head;
+        Nodo prev=null;
+        //desplazarnos n nodos
+        for(int i=1; i<n;i++){
+            prev=current;
+            current=current.getNext();            
+        }
+        //Eliminar el nodo actual
+        prev.setNext(current.getNext());
+        lenght--;
+        return remover(prev.getNext(),n);
     }
     
     //Metodo de Ordenamiento Burbuja
