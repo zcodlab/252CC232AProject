@@ -12,4 +12,5 @@ public interface ListTDA<E> {
     public boolean delete(E data);//eliminar en la lista, dada la data
     public E modify(int index, E data) throws IndexOutOfBoundsException;
     public int size();//retorna el # de elementos de la lista
+    public IteratorTDA<E> iterador();
 }
