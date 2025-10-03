@@ -7,8 +7,8 @@ public class LinkedListTDAMain {
     public static void main(String[] args){
         LinkedListTDAMain listTDAMain=new LinkedListTDAMain();
         //listTDAMain.testLinkedListTDAString();
-        listTDAMain.testLinkedListTDAPersona();
-        
+        //listTDAMain.testLinkedListTDAPersona();
+        listTDAMain.testLinkedListTDAUnion();        
     }
     
     private void testLinkedListTDAString(){
@@ -76,7 +76,30 @@ public class LinkedListTDAMain {
             " NO se encuentra en la lista ");
         
         System.out.println("Visualizando la lista");
-        System.out.println(lista.toString());
+        System.out.println(lista.toString());        
+    }
+    private void testLinkedListTDAUnion(){
+        ListTDA<String> l1=new LinkedListTDA();
+        l1.add("uno");
+        l1.add("dos");
+        l1.add("tres");
+        l1.add("cuatro");
+        l1.add("cinco");
+        System.out.println("Visualizando la lista1");
+        System.out.println(l1.toString());
+        
+        ListTDA<String> l2=new LinkedListTDA();
+        l2.add("uno");
+        l2.add("cinco");
+        l2.add("cero");
+        l2.add("cuatro");
+        l2.add("ocho");
+        System.out.println("Visualizando la lista2");
+        System.out.println(l2.toString());
+        
+        ListTDA<String> lista=new LinkedListTDA();
+        System.out.println("Visualizando la union de las listas");
+        System.out.println(lista.union(l1, l2).toString());
         
     }
 }
