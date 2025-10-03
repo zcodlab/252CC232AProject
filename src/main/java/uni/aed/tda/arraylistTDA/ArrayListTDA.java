@@ -149,5 +149,20 @@ public class ArrayListTDA<E> implements ListTDA<E>{
         }
         return str.toString();
     }
+
+    @Override
+    public ListTDA<E> union(ListTDA<E> l1, ListTDA<E> l2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ListTDA<E> interseccion(ListTDA<E> l1, ListTDA<E> l2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ListTDA<E> diferencia(ListTDA<E> l1, ListTDA<E> l2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

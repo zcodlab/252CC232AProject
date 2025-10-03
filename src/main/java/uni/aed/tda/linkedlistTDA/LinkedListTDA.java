@@ -41,13 +41,7 @@ public class LinkedListTDA<E> implements ListTDA<E>{
        if(index==count)
            cola=newNodo;//apuntador cola apunta al nuevo nodo
        count++;       
-    }
-
-    @Override
-    public void clear() {
-        head=cola=null;        
-        count=0;
-    }
+    }    
 
     @Override
     public boolean contain(E data) {
@@ -93,12 +87,7 @@ public class LinkedListTDA<E> implements ListTDA<E>{
         if(index==count)
             index=NOT_FOUND;
         return index;            
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return count==0;
-    }
+    }    
 
     @Override
     public E delete(int index) throws IndexOutOfBoundsException {
@@ -157,10 +146,23 @@ public class LinkedListTDA<E> implements ListTDA<E>{
         apt.setData(data);
         return anterior;
     }
+    
+    
 
     @Override
     public int size() {
         return count;
+    }
+    
+    @Override
+    public void clear() {
+        head=cola=null;        
+        count=0;
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        return count==0;
     }
 
     @Override
@@ -178,6 +180,42 @@ public class LinkedListTDA<E> implements ListTDA<E>{
             str.append(it.next().toString());
         }
         return str.toString();
+    }
+
+    @Override
+    public ListTDA<E> union(ListTDA<E> l1, ListTDA<E> l2) {
+        IteratorTDA<E> it1=l1.iterador();
+        IteratorTDA<E> it2=l2.iterador();
+        ListTDA<E> result=new LinkedListTDA<>();
+        while(it1.hasNext()){
+            E temp= it1.next();
+            if(!isIn(result,temp))
+                result.add(temp);
+        }
+        while(it2.hasNext()){
+            E temp= it2.next();
+            if(!isIn(result,temp))
+                result.add(temp);
+        }
+        return result;        
+    }
+    private boolean isIn(ListTDA<E> l,E value){
+        IteratorTDA<E> it=l.iterador();
+        while(it.hasNext()){
+            if(it.next().equals(value))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public ListTDA<E> interseccion(ListTDA<E> l1, ListTDA<E> l2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ListTDA<E> diferencia(ListTDA<E> l1, ListTDA<E> l2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

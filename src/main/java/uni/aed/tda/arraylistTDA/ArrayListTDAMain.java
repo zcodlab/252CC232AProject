@@ -17,7 +17,8 @@ public class ArrayListTDAMain {
         lista.add("Jose");
         lista.add("Beatriz");
         lista.add("Sandro");
-        lista.add("Franklin");
+        lista.add("Franklin");        
+        
         System.out.println("Despues de añadir elementos");
         System.out.println("La lista contiene "+lista.size()+" elementos");
         
@@ -48,11 +49,13 @@ public class ArrayListTDAMain {
         System.out.println("La lista contiene "+lista.size()+" elementos");
         Persona p1=new Persona("Sonya Smith",30,'F');
         Persona p2=new Persona("Barack Obama",60,'M');
-        Persona p3=new Persona("Dina Boluarte",50,'F');
+        Persona p3=new Persona("Dina Boluarte",50,'F');        
         Persona p4=new Persona("Donald Trump",70,'M');
         lista.add(p1);
         lista.add(p2);
         lista.add(p3);
+        lista.add(p1);
+        
         System.out.println("Despues de añadir elementos");
         System.out.println("La lista contiene "+lista.size()+" elementos");
         
