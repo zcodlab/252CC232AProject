@@ -198,7 +198,8 @@ public class LinkedListTDA<E> implements ListTDA<E>{
                 result.add(temp);
         }
         return result;        
-    }
+    }   
+    
     private boolean isIn(ListTDA<E> l,E value){
         IteratorTDA<E> it=l.iterador();
         while(it.hasNext()){
@@ -206,16 +207,30 @@ public class LinkedListTDA<E> implements ListTDA<E>{
                 return true;
         }
         return false;
-    }
+    }    
 
     @Override
     public ListTDA<E> interseccion(ListTDA<E> l1, ListTDA<E> l2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        IteratorTDA<E> it1=l1.iterador();
+        ListTDA<E> result= new LinkedListTDA<>();
+        while(it1.hasNext()){
+            E temp=it1.next();
+            if(isIn(l2,temp) && !isIn(result,temp))
+                result.add(temp);
+        }
+        return result;
     }
 
     @Override
     public ListTDA<E> diferencia(ListTDA<E> l1, ListTDA<E> l2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        IteratorTDA<E> it1=l1.iterador();
+        ListTDA<E> result= new LinkedListTDA<>();
+        while(it1.hasNext()){
+            E temp=it1.next();
+            if(!isIn(l2,temp) && !isIn(result,temp))
+                result.add(temp);
+        }
+        return result;
     }
     
 }
