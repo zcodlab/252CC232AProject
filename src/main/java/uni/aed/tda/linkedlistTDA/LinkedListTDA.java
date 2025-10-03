@@ -124,22 +124,60 @@ public class LinkedListTDA<E> implements ListTDA<E>{
 
     @Override
     public boolean delete(E data) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        boolean resultado=false;
+        Nodo<E> apt=head;
+        Nodo<E> nodoDelete=null;
+        while(apt!=null && !apt.getData().equals(data)){
+            nodoDelete=apt;
+            apt=apt.getNext();
+        }
+        if(apt!=null){
+            if(nodoDelete==null){
+                head=head.getNext();
+                if(head==null)
+                    cola=null;
+            }else{
+                nodoDelete.setNext(apt.getNext());
+                if(nodoDelete.getNext()==null)
+                    cola=nodoDelete;
+            }
+            count--;
+            resultado=true;
+        }
+        return resultado;
     }
 
     @Override
     public E modify(int index, E data) throws IndexOutOfBoundsException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        revisaPosAcceso(index);
+        Nodo<E> apt=head;
+        for(int i=0; i<index;i++)
+            apt=apt.getNext();
+        E anterior=apt.getData();
+        apt.setData(data);
+        return anterior;
     }
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return count;
     }
 
     @Override
     public IteratorTDA<E> iterador() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new Iterador(head);
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder str=new StringBuilder();
+        IteratorTDA<E> it=iterador();
+        while(it.hasNext()){
+            if(!str.isEmpty())
+                str.append("->");
+            str.append(it.next().toString());
+        }
+        return str.toString();
     }
     
 }
