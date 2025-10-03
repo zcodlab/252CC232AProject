@@ -111,7 +111,7 @@ public class LinkedListTDA<E> implements ListTDA<E>{
             if(head==null)
                 cola=null;
         }else{
-            for(int i=0;i<index;i++)
+            for(int i=1;i<index;i++)
                 apt=apt.getNext();
             nodoDelete=apt.getNext();
             apt.setNext(nodoDelete.getNext());
