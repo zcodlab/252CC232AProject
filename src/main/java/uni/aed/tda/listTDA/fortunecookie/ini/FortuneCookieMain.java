@@ -1,4 +1,4 @@
-package uni.aed.tda.arraylistTDA.fortunecookie.inicio;
+package uni.aed.tda.listTDA.fortunecookie.ini;
 
 import java.util.Scanner;
 
