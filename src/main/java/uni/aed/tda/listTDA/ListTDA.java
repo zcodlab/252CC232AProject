@@ -12,6 +12,8 @@ public interface ListTDA<E> {
     public boolean delete(E data);//eliminar en la lista, dada la data
     public E modify(int index, E data) throws IndexOutOfBoundsException;
     public int size();//retorna el # de elementos de la lista
+    public String toString(String patron);
+    public Object[] toArray();
     public IteratorTDA<E> iterador();
     public ListTDA<E> union(ListTDA<E> l1,ListTDA<E> l2);
     public ListTDA<E> interseccion(ListTDA<E> l1,ListTDA<E> l2);

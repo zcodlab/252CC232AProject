@@ -148,6 +148,18 @@ public class ArrayListTDA<E> implements ListTDA<E>{
             str.append(it.next().toString());
         }
         return str.toString();
+    }    
+    
+    @Override
+    public String toString(String patron) {
+        StringBuilder str=new StringBuilder();
+        IteratorTDA<E> it=this.iterador();
+        while(it.hasNext()){
+            if(!str.isEmpty())
+                str.append(patron);
+            str.append(it.next().toString());
+        }
+        return str.toString();
     }
 
     @Override
@@ -163,6 +175,18 @@ public class ArrayListTDA<E> implements ListTDA<E>{
     @Override
     public ListTDA<E> diferencia(ListTDA<E> l1, ListTDA<E> l2) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Object[] toArray() {
+        IteratorTDA<E> it=this.iterador();
+        Object[] newArray=new Object[size()];
+        int i=0;
+        while(it.hasNext()){
+            newArray[i]=(Object)it.next();
+            i++;
+        }
+        return newArray;
     }
     
 }
