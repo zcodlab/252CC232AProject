@@ -13,7 +13,7 @@ public class Nodo<E> {
         this.data = data;
     }
 
-    public void setNext(Nodo next) {
+    public void setNext(Nodo<E> next) {
         this.next = next;
     }
 
