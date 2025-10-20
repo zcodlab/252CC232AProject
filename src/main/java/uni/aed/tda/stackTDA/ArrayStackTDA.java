@@ -69,12 +69,13 @@ public class ArrayStackTDA<E> implements StackTDA<E> {
     public String toString() {
         StringBuilder str=new StringBuilder();
         int current=count-1;
+        str.append("[TOP]");
         while(current>=0){
             if(!str.isEmpty())
                 str.append(",");
             str.append(datos[current].toString());
             current--;
-        }
+        }        
         return str.toString();
     }
 }
