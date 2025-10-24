@@ -76,7 +76,7 @@ public class ArrayQueueTDA<E> implements QueueTDA<E>{
     public String toString() {
         StringBuilder str=new StringBuilder();
         int current=front;        
-        for(int i=0;i<queue.length;i++){
+        for(int i=0;i<count;i++){
             if(!str.isEmpty())
                 str.append(",");
             str.append(queue[current].toString());
