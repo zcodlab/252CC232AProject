@@ -34,11 +34,18 @@ public class Trabajo implements Comparable<Trabajo> {
             throw new IllegalArgumentException("tiempo restante no puede ser negativo");      
         this.tiempoRestante=tiempoRestante;        
     }
-    public boolean ejecutarUnMinto(){
+    public boolean ejecutarUnMinuto(){
         if(tiempoRestante<=0)
             throw new IllegalArgumentException("El trabajo ya ejecuto todos sus minutos asignados");      
         tiempoRestante--;
         return tiempoRestante<=0;        
+    }
+    
+    // Calculamos el tiempo de espera del trabajo
+    public int calcularTiempoEspera(int tiempoActual) {
+        if (tiempoActual < tiempoLlegada)
+            throw new IllegalArgumentException("Tiempo actual no puede ser menor que tiempo de llegada");        
+        return tiempoActual - tiempoLlegada;
     }
 
     @Override

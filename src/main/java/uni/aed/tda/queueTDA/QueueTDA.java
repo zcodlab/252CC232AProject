@@ -7,4 +7,5 @@ public interface QueueTDA<E> {
     public void clear();
     public int size();
     public boolean isEmpty();
+    public String toString(String patron);
 }
