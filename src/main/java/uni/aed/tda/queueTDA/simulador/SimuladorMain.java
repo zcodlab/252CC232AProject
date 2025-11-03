@@ -1,5 +1,9 @@
 package uni.aed.tda.queueTDA.simulador;
-
+/*Caso 1 (Pag 1097-Ej 9 C.Thomas Wu)
+Escriba un programa de simulación de agenda de trabajo. En las buenas épocas, mucho antes de la revolución de las PC, los estudiantes de ciencias de la computación escribían programas con el uso de máquinas perforadoras de tarjetas y los ejecutaban en las computadoras centrales. Un programa se registraba sobre una pila de tarjetas perforadas, una sentencia por tarjeta perforada, Para ejecutar sus programas, los estudiantes debían entregar el programa (la pila de tarjetas) al operador de la computadora. Un programa se llamaba trabajo (Job). A los estudiantes que tomaban un curso de computación se les asignaba cierto número de unidades (un tipo de dinero virtual) y se les cargaban N unidades para ejecutar un programa. La cantidad real cargada se determina por la prioridad que los estudiantes asignaban a sus programas. Para este ejercicio, suponga que las prioridades varían de 1 a 5, con 1 como la más alta.
+Escriba un programa en java que simule la agenda de trabajo. Las entradas al programa con M, que es el número de minutos a simular y N que es el número de trabajos que la computadora puede ejecutar concurrentemente. Trate a cada minuto como un evento discreto. Suponga que un solo trabajo llega cada minuto. Cuando llega un trabajo, asigne en forma aleatoria su prioridad y el número de minutos que necesita para ejecutarse. Elija cualquier entero entre 1 minuto y 10 minutos, inclusive, para el tiempo de ejecución. Un trabajo que llega se coloca en una cola de prioridad. En cada evento discreto, si el número de trabajos asignado a la computadora esta abajo del número máximo de trabajos que puede manejar la computadora, remueve trabajos de la cola de prioridad y los asigna a la computadora.
+Al final de la simulación, obtenga el tiempo de espera promedio y el tiempo de espera máximo para cada nivel de prioridad. Vea el ejercicio 8 acerca de como manejar la situación en la que la cola no este vacía al final de los minutos simulados.
+*/
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import uni.aed.tda.listTDA.ListTDA;
