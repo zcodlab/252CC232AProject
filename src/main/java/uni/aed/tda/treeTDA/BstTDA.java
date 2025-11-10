@@ -1,5 +1,8 @@
 package uni.aed.tda.treeTDA;
 
+import uni.aed.tda.queueTDA.LinkedQueueTDA;
+import uni.aed.tda.queueTDA.QueueTDA;
+
 public class BstTDA<E extends Comparable<E>> {
     private static final int NOT_FOUND=-1;
     private static final int FOUND=1;
@@ -61,6 +64,46 @@ public class BstTDA<E extends Comparable<E>> {
             inorder(p.getLeft(),str);//(L)
             visit(p,str);           //(V)
             inorder(p.getRight(),str);//(R)            
+        }
+    }
+    
+    //preorder(VLR)
+    public void preorder(StringBuilder str){
+        preorder(root,str);
+    }
+    private void preorder(BstNodeTDA<E> p, StringBuilder str){
+        if(p!=null){
+            visit(p,str);           //(V)
+            preorder(p.getLeft(),str);//(L)            
+            preorder(p.getRight(),str);//(R)            
+        }
+    }
+    
+    //postorder(LRV)
+    public void postorder(StringBuilder str){
+        postorder(root,str);
+    }
+    private void postorder(BstNodeTDA<E> p, StringBuilder str){
+        if(p!=null){            
+            postorder(p.getLeft(),str);//(L)            
+            postorder(p.getRight(),str);//(R)            
+            visit(p,str);           //(V)
+        }
+    }
+    //recorrido primero en amplitud
+    public void breadthFirst(StringBuilder str){
+        BstNodeTDA<E> p=root;
+        QueueTDA<BstNodeTDA<E>> q= new LinkedQueueTDA<>();
+        if(p!=null){
+            q.enqueue(p);
+            while(!q.isEmpty()){
+                p=q.dequeue();
+                visit(p,str);
+                if(p.getLeft()!=null)
+                    q.enqueue(p.getLeft());
+                if(p.getRight()!=null)
+                    q.enqueue(p.getRight());
+            }
         }
     }
 
