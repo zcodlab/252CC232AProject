@@ -106,6 +106,92 @@ public class BstTDA<E extends Comparable<E>> {
             }
         }
     }
+    
+    //Eliminacion por copiado
+    public int deleteByCopying(E e){
+        BstNodeTDA<E> tmp;
+        BstNodeTDA<E> node,p=root,prev=null,previous;
+        //buscamos el nodo a eliminar
+        while(p!=null && p.getKey().compareTo(e)!=0){
+            prev=p; //reservamos p
+            if(p.getKey().compareTo(e)<0)
+                p=p.getRight();
+            else
+                p=p.getLeft();            
+        }
+        node=p;
+        if(p!=null && p.getKey()==e){//encontro el elemento a eliminar
+            if(node.getRight()==null)//verificamos si no tiene hijo derecho
+                node=node.getLeft();
+            else if(node.getLeft()==null)//verificamos si no tiene hijo izquierdo
+                node=node.getRight();
+            else{//el nodo tiene dos hijos
+                tmp=node.getLeft(); //reservamos el nodo izq(uno de los hijos)
+                previous=node;
+                //ubicamos la rama derecha de la rama izq del nodo a eliminar
+                while(tmp.getRight()!=null){
+                    previous=tmp;
+                    tmp=tmp.getRight();
+                }
+                //copiamos el nodo derecho mas extremo de la rama izq del nodo a eliminar
+                node.setKey(tmp.getKey());
+                if(previous==node)
+                    previous.setLeft(tmp.getLeft());
+                else
+                    previous.setRight(tmp.getLeft());
+            }
+            if(p==root)
+                root=node;
+            else if(p==prev.getLeft())
+                prev.setLeft(node);
+            else
+                prev.setRight(node);
+        }else if(root!=null)//si no encontro el elemento a eliminar en el arbol
+            return NOT_FOUND;
+        else
+            return IS_EMPTY;        
+        return FOUND;        
+    }
+    
+    //Eliminacion por copiado
+    public int deleteByMerging(E e){
+        BstNodeTDA<E> tmp;
+        BstNodeTDA<E> node,p=root,prev=null;
+        //buscamos el nodo a eliminar
+        while(p!=null && p.getKey().compareTo(e)!=0){
+            prev=p; //reservamos p
+            if(p.getKey().compareTo(e)<0)
+                p=p.getRight();
+            else
+                p=p.getLeft();            
+        }        
+        node=p;
+        if(p!=null && p.getKey().compareTo(e)==0){//encontro el elemento a eliminar
+            if(node.getRight()==null)
+                node=node.getLeft();
+            else if (node.getLeft()==null)
+                node=node.getRight();
+            else{//tiene los dos hijos
+                tmp=node.getLeft();
+                while(tmp.getRight()!=null)
+                    tmp=tmp.getRight();
+                //se ubico el nodo derecho mas extremo de la rama izq 
+                //y se le establece como node derecho el nodo derecho 
+                //del nodo a eliminar(sobreposicion)
+                tmp.setRight(node.getRight());
+            }
+            if (p==root)
+                root=node;
+            else if (prev.getLeft()==p)
+                prev.setLeft(node);
+            else
+                prev.setRight(node);
+        }else if (root!=null)
+            return NOT_FOUND;
+        else
+            return IS_EMPTY;
+        return FOUND;        
+    }
 
     @Override
     public String toString() {
