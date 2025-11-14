@@ -174,11 +174,12 @@ public class BstTDA<E extends Comparable<E>> {
             else{//tiene los dos hijos
                 tmp=node.getLeft();
                 while(tmp.getRight()!=null)
-                    tmp=tmp.getRight();
+                    tmp=tmp.getRight();                
                 //se ubico el nodo derecho mas extremo de la rama izq 
                 //y se le establece como node derecho el nodo derecho 
                 //del nodo a eliminar(sobreposicion)
                 tmp.setRight(node.getRight());
+                node=node.getLeft();
             }
             if (p==root)
                 root=node;

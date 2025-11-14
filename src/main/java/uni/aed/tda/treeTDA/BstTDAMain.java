@@ -7,8 +7,8 @@ public class BstTDAMain {
     public static void main(String[] args){
         BstTDAMain bstTDAMain=new BstTDAMain();       
         bstTDAMain.testBstTDAInteger();
-        System.out.println("--------------------------------");
-        bstTDAMain.testBstTDAPersona();
+        //System.out.println("--------------------------------");
+        //bstTDAMain.testBstTDAPersona();
     }
     private void testBstTDAInteger(){
         BstTDA<Integer> tree=new BstTDA<>();
@@ -48,6 +48,25 @@ public class BstTDAMain {
         str.setLength(0);
         tree.visit(tree.search(100), str);
         System.out.println(str.toString());
+        
+        /*
+        System.out.println("Realizando la eliminacion por copiado");
+        str.setLength(0);
+        int result=tree.deleteByCopying(15);
+        if(result!=1)
+            System.out.println("El valor a eliminar no se ubico en el arbol o el arbol esta vacio");
+        System.out.println("Visualizando el arbol");
+        System.out.println(tree.toString());      */     
+        
+        System.out.println("Realizando la eliminacion por fusion");
+        str.setLength(0);
+        int result=tree.deleteByMerging(15);
+        if(result!=1)
+            System.out.println("El valor a eliminar no se ubico en el arbol o el arbol esta vacio");
+        System.out.println("Visualizando el arbol");
+        System.out.println(tree.toString());
+        
+        
     }
     
     private void testBstTDAPersona(){
