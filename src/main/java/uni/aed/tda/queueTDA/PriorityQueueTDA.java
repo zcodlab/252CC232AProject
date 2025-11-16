@@ -135,4 +135,15 @@ public class PriorityQueueTDA<E> implements QueueTDA<E> {
         }
         return str.toString();
     }
+
+    @Override
+    public Object[] toArray() {
+        Object[] newArray= new Object[size()];
+        int current=RAIZ;
+        while(current<count){
+            newArray[current] = (Object)heap[current];
+            current++;
+        }
+        return newArray;
+    }
 }

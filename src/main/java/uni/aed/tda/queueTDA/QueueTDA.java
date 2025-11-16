@@ -8,4 +8,5 @@ public interface QueueTDA<E> {
     public int size();
     public boolean isEmpty();
     public String toString(String patron);
+    public Object[] toArray();
 }
