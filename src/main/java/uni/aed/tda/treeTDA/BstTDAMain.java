@@ -7,8 +7,8 @@ public class BstTDAMain {
     public static void main(String[] args){
         BstTDAMain bstTDAMain=new BstTDAMain();       
         bstTDAMain.testBstTDAInteger();
-        //System.out.println("--------------------------------");
-        //bstTDAMain.testBstTDAPersona();
+        System.out.println("--------------------------------");
+        bstTDAMain.testBstTDAPersona();
     }
     private void testBstTDAInteger(){
         BstTDA<Integer> tree=new BstTDA<>();
@@ -49,18 +49,18 @@ public class BstTDAMain {
         tree.visit(tree.search(100), str);
         System.out.println(str.toString());
         
-        /*
+        
         System.out.println("Realizando la eliminacion por copiado");
         str.setLength(0);
         int result=tree.deleteByCopying(15);
         if(result!=1)
             System.out.println("El valor a eliminar no se ubico en el arbol o el arbol esta vacio");
         System.out.println("Visualizando el arbol");
-        System.out.println(tree.toString());      */     
+        System.out.println(tree.toString());      
         
         System.out.println("Realizando la eliminacion por fusion");
         str.setLength(0);
-        int result=tree.deleteByMerging(15);
+        result=tree.deleteByMerging(17);
         if(result!=1)
             System.out.println("El valor a eliminar no se ubico en el arbol o el arbol esta vacio");
         System.out.println("Visualizando el arbol");
@@ -72,7 +72,7 @@ public class BstTDAMain {
     private void testBstTDAPersona(){
         BstTDA<Persona> tree=new BstTDA<>();
         Persona p1=new Persona("Elon Musk", 60,'M');
-        Persona p2=new Persona("Barck Obama", 65,'M');
+        Persona p2=new Persona("Barack Obama", 65,'M');
         Persona p3=new Persona("Jose Jeri", 35,'M');
         Persona p4=new Persona("Mick jagger", 72,'M');
         Persona p5=new Persona("Sonya Smith", 30,'F');
@@ -108,16 +108,14 @@ public class BstTDAMain {
         tree.breadthFirst(str);
         System.out.println(str.toString());
         
-        System.out.println("Realizando busqueda del valor "+ p7.toString());
+        System.out.println("Realizando busqueda de la persona "+ p6.toString());
         str.setLength(0);
         tree.visit(tree.search(p6), str);
         System.out.println(str.toString());
         
-        System.out.println("Realizando busqueda del valor 100");
+        System.out.println("Realizando busqueda de la persona "+ p7.toString());
         str.setLength(0);
         tree.visit(tree.search(p7), str);
         System.out.println(str.toString());
-        
-        
     }
 }
