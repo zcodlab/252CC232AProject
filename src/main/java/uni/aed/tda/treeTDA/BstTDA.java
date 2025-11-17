@@ -51,7 +51,7 @@ public class BstTDA<E extends Comparable<E>> {
             return;
         }
         if(!str.isEmpty())
-            str.append(",");
+            str.append("\n");
         str.append(p.getKey());
     }
     //recorrido del arbol - primero en profundidad
