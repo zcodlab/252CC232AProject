@@ -62,7 +62,7 @@ public class SoftwareStore {
     private void updateFile(){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))){
             StringBuilder sb=new StringBuilder();
-            bst.inorder(sb);
+            bst.inorder(sb,"\n");
             writer.write(sb.toString());
         }catch(IOException e){
             e.printStackTrace();

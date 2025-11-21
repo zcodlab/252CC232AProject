@@ -51,7 +51,7 @@ public class BstTDA<E extends Comparable<E>> {
             return;
         }
         if(!str.isEmpty())
-            str.append("\n");
+            str.append(",");
         str.append(p.getKey());
     }
     //recorrido del arbol - primero en profundidad
@@ -67,6 +67,26 @@ public class BstTDA<E extends Comparable<E>> {
         }
     }
     
+    public void visit(BstNodeTDA<E> p,StringBuilder str, String patron){
+        if(p==null){
+            str.append(NOT_FOUND);
+            return;
+        }
+        if (!str.isEmpty()) 
+            str.append(patron);  
+        str.append(p.getKey());        
+    }
+    //LVR
+    public void inorder(StringBuilder str, String patron){
+        inorder(root,str,patron);
+    }
+    private void inorder(BstNodeTDA<E> p,StringBuilder str, String patron){
+        if(p!=null){
+            inorder(p.getLeft(),str,patron);
+            visit(p,str,patron);
+            inorder(p.getRight(),str,patron);
+        }        
+    }
     //preorder(VLR)
     public void preorder(StringBuilder str){
         preorder(root,str);
@@ -192,6 +212,159 @@ public class BstTDA<E extends Comparable<E>> {
         else
             return IS_EMPTY;
         return FOUND;        
+    }
+    
+    // Eliminacion por fusion (asimetricamente: usa el sucesor)
+    public int deleteByMergingAsymmetric(E e) {
+        BstNodeTDA<E> node = root, prev = null;
+        // Buscar el nodo a eliminar
+        while (node != null && node.getKey().compareTo(e) != 0) {
+            prev = node;
+            if (e.compareTo(node.getKey()) < 0)
+                node = node.getLeft();
+            else
+                node = node.getRight();
+        }
+
+        if (node == null) {
+            if (root == null) return IS_EMPTY;
+            return NOT_FOUND;
+        }
+
+        BstNodeTDA<E> tmp;
+        // Caso 1: sin hijo derecho
+        if (node.getRight() == null)
+            node = node.getLeft();        
+        // Caso 2: sin hijo izquierdo
+        else if (node.getLeft() == null)
+            node = node.getRight();        
+        // Caso 3: dos hijos -> fusion asimetrica
+        else {
+            tmp = node.getRight(); // vamos al subarbol derecho
+            // buscar el sucesor: el mas pequeno -> ir a la izquierda
+            while (tmp.getLeft() != null)
+                tmp = tmp.getLeft();
+            // conectar el subarbol izquierdo en el punto encontrado
+            tmp.setLeft(node.getLeft());
+            // el nuevo subarbol fusionado sera el derecho
+            node = node.getRight();
+        }
+        // Reemplazar puntero del padre
+        if (node == root)
+            root = node;        
+        else if (prev.getLeft() != null && ((Comparable)(prev.getLeft().getKey())).compareTo(e) == 0)
+            prev.setLeft(node);        
+        else
+            prev.setRight(node);
+        
+        return FOUND;
+    }
+    
+    // Eliminacion por copiado (asimetricamente)
+    public int deleteByCopyingAsymmetric(E e){
+        BstNodeTDA<E> tmp;
+        BstNodeTDA<E> node, p = root, prev = null, previous;
+
+        // Buscamos el nodo a eliminar
+        while (p != null && p.getKey().compareTo(e) != 0) {
+            prev = p;
+            if (p.getKey().compareTo(e) < 0)
+                p = p.getRight();
+            else
+                p = p.getLeft();
+        }
+
+        node = p;
+        // Si encontramos el elemento
+        if (p != null && p.getKey().compareTo(e) == 0) {
+            // Caso 1: sin hijo derecho
+            if (node.getRight() == null)
+                node = node.getLeft();
+            // Caso 2: sin hijo izquierdo
+            else if (node.getLeft() == null)
+                node = node.getRight();
+            // Caso 3: tiene dos hijos — eliminacion por copiado asimetrica
+            else {
+                tmp = node.getRight();    // vamos al subarbol derecho
+                previous = node;
+                // buscamos el minimo del subarbol derecho (sucesor)
+                while (tmp.getLeft() != null) {
+                    previous = tmp;
+                    tmp = tmp.getLeft();
+                }
+                // copiamos la clave del sucesor al nodo a eliminar
+                node.setKey(tmp.getKey());
+                // reenganchamos el subarbol del sucesor
+                if (previous == node)
+                    previous.setRight(tmp.getRight());
+                else
+                    previous.setLeft(tmp.getRight());
+            }
+
+            // Ajustamos el padre
+            if (p == root)
+                root = node;
+            else if (prev.getLeft() == p)
+                prev.setLeft(node);
+            else
+                prev.setRight(node);
+        }
+        else if (root != null)
+            return NOT_FOUND;
+        else
+            return IS_EMPTY;
+        return FOUND;
+    }
+    
+    // Calcular la Longitud de Ruta Interna (IPL)
+    public long calcularIPL() {
+        return calcularIPLRecursivo(root, 0);
+    }
+
+    private long calcularIPLRecursivo(BstNodeTDA<E> nodo, long nivel) {
+        if (nodo == null) return 0;
+        boolean esHoja = (nodo.getLeft() == null && nodo.getRight() == null);
+        long suma = 0;
+        // Solo sumar si NO es hoja
+        if (!esHoja)
+            suma += nivel;        
+
+        return suma
+             + calcularIPLRecursivo(nodo.getLeft(), nivel + 1)
+             + calcularIPLRecursivo(nodo.getRight(), nivel + 1);
+    }
+
+    public long calculateHeight() {
+        return calculateHeightRecursivo(root);
+    }
+    // Metodo para calcular la altura del arbol de manera recursiva
+    private long calculateHeightRecursivo(BstNodeTDA<E> node) {
+        if (node == null) return 0; // Si el nodo es nulo, su altura es 0
+        // Retorna la altura maxima entre el subarbol izquierdo y derecho
+        return 1 + Math.max(calculateHeightRecursivo(node.getLeft()), calculateHeightRecursivo(node.getRight()));
+    }
+    
+    public long countNodes() {
+        return countNodesRecursivo(root);
+    }
+    // Metodo para contar el numero total de nodos en el arbol
+    private long countNodesRecursivo(BstNodeTDA<E> node) {
+        if (node == null) return 0; // Si el nodo es nulo, no hay nodos
+        // Retorna 1 (el nodo actual) mas el conteo de los nodos en los subarboles izquierdo y derecho
+        return 1 + countNodesRecursivo(node.getLeft()) + countNodesRecursivo(node.getRight());
+    }
+    
+    public boolean isBalanced() {
+        return isBalancedRecursivo(root);
+    }
+    // Metodo para verificar si el arbol esta balanceado
+    private boolean isBalancedRecursivo(BstNodeTDA<E>  node) {
+        if (node == null) return true; // Si el nodo es nulo, el arbol es balanceado
+        // Compara las alturas de los subarboles izquierdo y derecho
+        long leftHeight = calculateHeightRecursivo(node.getLeft());
+        long rightHeight = calculateHeightRecursivo(node.getRight());
+        // El arbol esta balanceado si la diferencia de alturas no es mayor a 1 y ambos subarboles son balanceados
+        return Math.abs(rightHeight-leftHeight) <= 1 && isBalancedRecursivo(node.getLeft()) && isBalancedRecursivo(node.getRight());
     }
 
     @Override

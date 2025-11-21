@@ -20,6 +20,11 @@ public class BstTDAMain {
         System.out.println("Visualizando el arbol");
         System.out.println(tree.toString());
         
+        System.out.println("El IPL del arbol es: "+ tree.calcularIPL()); 
+        System.out.println("La altura del arbol es: "+ tree.calculateHeight());         
+        System.out.println("El Numero de nodos del arbol es: "+ tree.countNodes());                  
+        System.out.println("El arbol esta balanceado?: "+ tree.isBalanced());
+        
         System.out.println("Realizando una llamda inorder(LVR)");
         tree.inorder(str);
         System.out.println(str.toString());
