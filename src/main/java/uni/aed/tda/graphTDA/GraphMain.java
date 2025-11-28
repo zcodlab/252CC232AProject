@@ -1,8 +1,11 @@
 package uni.aed.tda.graphTDA;
 
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner;
 import uni.aed.tda.graphTDA.DataGraph.UndirectedGraph;
+import uni.aed.tda.graphTDA.shortestpath.CostPathPair;
+import uni.aed.tda.graphTDA.shortestpath.Dijkstra;
 
 public class GraphMain {
     private static Scanner scr;
@@ -20,11 +23,13 @@ public class GraphMain {
             {	
                 System.out.print("Grafos"+SEPARADOR+
                 "1.- Grafo No Dirigido "+SEPARADOR+                                            
-                "2.- Salir "+SEPARADOR+"Elija una opcion:");                
+                "2.- Dijkstra No Dirigido "+SEPARADOR+                                            
+                "3.- Salir "+SEPARADOR+"Elija una opcion:");                
                 opcion =scr.nextInt();            
                 switch (opcion)
                 {
                     case 1 -> {getUndirectedGraph();}                                                          
+                    case 2 -> {getDijkstraUndirected();}                                                          
                     default -> {break;}
                 }	            
                 System.out.print("Para continuar con las operaciones pulsa S; Para finalizar pulse N: ");
@@ -42,9 +47,26 @@ public class GraphMain {
     
     private void getUndirectedGraph(){
         System.out.println("Grafo no dirigido");
-        DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();
-        //String r=undirectedGraph.graph.toString();
+        DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();        
         System.out.println(undirectedGraph.graph.toString());
+    }
+    private void getDijkstraUndirected(){
+        System.out.println("Dijkstra no dirigido");
+        DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();        
+        Vertex<Integer> start = undirectedGraph.v1;
+        Vertex<Integer> end = undirectedGraph.v5;
+        Dijkstra dijkstra=new Dijkstra();
+        Map<Vertex<Integer>,CostPathPair<Integer>> map
+                =dijkstra.getShortestPaths(undirectedGraph.graph, start);
+        
+        CostPathPair<Integer> path;
+        System.out.println("Dijkstra: Ruta mas corta, nodo inicial: "+start.getValue());
+        for(Vertex<Integer> v: map.keySet()){
+            System.out.println("v="+v.getValue());
+            path=map.get(v);
+            System.out.println("Dijkstra: Ruta mas corta, ruta: "+path);
+        }
+        
     }
     
 }

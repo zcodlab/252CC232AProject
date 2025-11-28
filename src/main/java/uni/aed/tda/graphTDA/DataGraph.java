@@ -8,11 +8,11 @@ public class DataGraph {
     //clase interna para inicializar un grafo
     protected static class UndirectedGraph{
         private List<Vertex<Integer>> vertices=new ArrayList<>();
-        private Vertex<Integer> v1=new Vertex<>(1);
+        protected Vertex<Integer> v1=new Vertex<>(1);
         private Vertex<Integer> v2=new Vertex<>(2);
         private Vertex<Integer> v3=new Vertex<>(3);
         private Vertex<Integer> v4=new Vertex<>(4);
-        private Vertex<Integer> v5=new Vertex<>(5);
+        protected Vertex<Integer> v5=new Vertex<>(5);
         private Vertex<Integer> v6=new Vertex<>(6);
         private Vertex<Integer> v7=new Vertex<>(7);
         private Vertex<Integer> v8=new Vertex<>(8);
