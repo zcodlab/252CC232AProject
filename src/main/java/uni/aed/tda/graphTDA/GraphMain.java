@@ -43,7 +43,8 @@ public class GraphMain {
     private void getUndirectedGraph(){
         System.out.println("Grafo no dirigido");
         DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();
-        System.out.println(undirectedGraph.toString());
+        //String r=undirectedGraph.graph.toString();
+        System.out.println(undirectedGraph.graph.toString());
     }
     
 }

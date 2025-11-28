@@ -62,8 +62,8 @@ public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>>{
         StringBuilder builder=new StringBuilder();
         builder.append("Value=")
                 .append(value)
-                .append("weight=")
-                .append(value)
+                .append(" weight=")
+                .append(weigth)
                 .append("\n");
         for(Edge<T> e: edges)
             builder.append("\t").append(e.toString());

@@ -40,9 +40,7 @@ public class Graph<T extends Comparable<T>> {
             Vertex<T> to=e.getToVertex();
             //si no existen los vertices origen y destino en la lista de vertices actual, continuamos evaluando el siguiente
             //si existen entonces los vinculamos
-            if(!this.allVertices.contains(from) ||
-                    !this.allEdges.contains(to))
-                continue;
+            if(!this.allVertices.contains(from) || !this.allVertices.contains(to)) continue;
             from.addEdge(e);
             if(this.type==TYPE.UNDIRECTED){
               Edge<T> reciproca=new Edge<T>(e.getCost(),to,from); //arista inversa por ser grafo no dirigido o bidireccional
