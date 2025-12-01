@@ -1,5 +1,4 @@
 package uni.aed.tda.graphTDA;
-
 public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
     private Vertex<T> from=null; //vertice origen
     private Vertex<T> to=null; //vertice destino
@@ -31,11 +30,45 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }    
+
+    @Override
+    public boolean equals(Object e1) {
+        if(!(e1 instanceof Edge))
+            return false;
+        Edge<T> e= (Edge<T>)e1;
+        //compara costos
+        boolean costs=this.cost==e.cost;
+        //si los costos difieren
+        if(!costs)
+            return false;
+        //compara los vertice origen
+        boolean from=this.from==e.from;
+        if(!from)
+            return false;
+        boolean to=this.to==e.to;
+        if(!to)
+            return false;
+        return true;
     }
+    
     
     @Override
     public int compareTo(Edge<T> o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //comparando costos del objeto actual con el objeto parametro
+        if(this.cost < o.cost)
+            return -1;
+        if(this.cost > o.cost)
+            return 1;
+        //comparando vertices origen del objeto actual con el objeto parametro
+        int result = this.from.compareTo(o.from);
+        if(result!=0)
+            return result;
+        //comparando vertices destino del objeto actual con el objeto parametro
+        result = this.to.compareTo(o.to);
+        if(result!=0)
+            return result;
+        return 0;
     }
 
     @Override

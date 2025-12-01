@@ -72,7 +72,7 @@ public class GraphMain {
     }
     private void getKruskal(){
         System.out.println("Algoritmo de Kruskal");
-        DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();  
+        DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();          
         CostPathPair<Integer> path = Kruskal.getMinimumSpanningTree(undirectedGraph.graph);
         System.out.println("Kruskal: Arbol de Expansion minima: " + path);
     }

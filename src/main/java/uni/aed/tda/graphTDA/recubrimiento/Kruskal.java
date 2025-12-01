@@ -35,7 +35,7 @@ public class Kruskal {
             membershipMap.put(v, set);//añadimos cada vertice del grafo y el set(conjunto) a la tabla
         }
         //declaramos cola prioritaria con todas las aristas del grafo
-        Queue<Edge<Integer>> edgeQueue=new PriorityQueue<>(graph.getAllEdges());
+        final Queue<Edge<Integer>> edgeQueue=new PriorityQueue<>(graph.getAllEdges());
         while(!edgeQueue.isEmpty()){
             Edge<Integer> edge=edgeQueue.poll();//equivalente a remove o dequeue
             //si los vertices que unen la arista no son lo mismo
