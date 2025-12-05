@@ -1,9 +1,12 @@
 package uni.aed.tda.graphTDA;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import uni.aed.tda.graphTDA.DataGraph.DirectedGraph;
 import uni.aed.tda.graphTDA.DataGraph.UndirectedGraph;
+import uni.aed.tda.graphTDA.TopologicalSort.TopologicalSort;
 import uni.aed.tda.graphTDA.recubrimiento.Kruskal;
 import uni.aed.tda.graphTDA.recubrimiento.Prim;
 import uni.aed.tda.graphTDA.shortestpath.CostPathPair;
@@ -28,7 +31,8 @@ public class GraphMain {
                 "2.- Dijkstra No Dirigido "+SEPARADOR+                                            
                 "3.- Kruskal: Arbol de expansion minima "+SEPARADOR+                                            
                 "4.- Prim: Arbol de expansion minima "+SEPARADOR+                                            
-                "5.- Salir "+SEPARADOR+"Elija una opcion:");                
+                "5.- Ordenamiento Topologico "+SEPARADOR+                                            
+                "6.- Salir "+SEPARADOR+"Elija una opcion:");                
                 opcion =scr.nextInt();            
                 switch (opcion)
                 {
@@ -36,6 +40,7 @@ public class GraphMain {
                     case 2 -> {getDijkstraUndirected();}                                                          
                     case 3 -> {getKruskal();}                                                          
                     case 4 -> {getPrim();}                                                          
+                    case 5 -> {getTopologicalSort();}                                                          
                     default -> {break;}
                 }	            
                 System.out.print("Para continuar con las operaciones pulsa S; Para finalizar pulse N: ");
@@ -79,11 +84,18 @@ public class GraphMain {
         CostPathPair<Integer> path = Kruskal.getMinimumSpanningTree(undirectedGraph.graph);
         System.out.println("Kruskal: Arbol de Expansion minima: " + path);
     }
-     private void getPrim(){
+    private void getPrim(){
         System.out.println("Algoritmo de Prim");
         DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();          
         Vertex<Integer> start=undirectedGraph.v1;
         CostPathPair<Integer> path = Prim.getMinimumSpanningTree(undirectedGraph.graph,start);
         System.out.println("Prim: Arbol de Expansion minima: " + path);
+    }
+    
+    private void getTopologicalSort(){
+        System.out.println("Algoritmo de Ordenamiento Topologico");
+        DataGraph.DirectedGraph directedGraph=new DirectedGraph();          
+        List<Vertex<Integer>> result=TopologicalSort.sort(directedGraph.graph);
+        System.out.println("Resultado del Ordenamiento Topologico:\n"+result.toString() );
     }
 }

@@ -56,5 +56,56 @@ public class DataGraph {
         protected Graph<Integer> graph=new Graph<>(vertices,edges);
     }
     
+    protected static class DirectedGraph{
+        private List<Vertex<Integer>> vertices=new ArrayList<>();
+        protected Vertex<Integer> v1=new Vertex<>(1);
+        private Vertex<Integer> v2=new Vertex<>(2);
+        private Vertex<Integer> v3=new Vertex<>(3);
+        private Vertex<Integer> v4=new Vertex<>(4);
+        protected Vertex<Integer> v5=new Vertex<>(5);
+        private Vertex<Integer> v6=new Vertex<>(6);
+        private Vertex<Integer> v7=new Vertex<>(7);
+        private Vertex<Integer> v8=new Vertex<>(8);
+        {
+          vertices.add(v1);
+          vertices.add(v2);
+          vertices.add(v3);
+          vertices.add(v4);
+          vertices.add(v5);
+          vertices.add(v6);
+          vertices.add(v7);
+          vertices.add(v8);          
+        }
+        
+        private List<Edge<Integer>> edges=new ArrayList<>();
+        private Edge<Integer> e1_2 =new Edge<>(7,v1,v2);
+        private Edge<Integer> e1_3 =new Edge<>(9,v1,v3);
+        private Edge<Integer> e1_6 =new Edge<>(14,v1,v6);
+        private Edge<Integer> e2_3 =new Edge<>(10,v2,v3);
+        private Edge<Integer> e2_4 =new Edge<>(15,v2,v4);
+        private Edge<Integer> e3_4 =new Edge<>(11,v3,v4);
+        private Edge<Integer> e3_6 =new Edge<>(2,v3,v6);
+        private Edge<Integer> e6_5 =new Edge<>(9,v6,v5);
+        private Edge<Integer> e6_8 =new Edge<>(14,v6,v8);
+        private Edge<Integer> e4_5 =new Edge<>(6,v4,v5);
+        private Edge<Integer> e4_7 =new Edge<>(16,v4,v7);
+        private Edge<Integer> e1_8 =new Edge<>(30,v1,v8);
+        
+        {
+            edges.add(e1_2);
+            edges.add(e1_3);
+            edges.add(e1_6);
+            edges.add(e2_3);
+            edges.add(e2_4);
+            edges.add(e3_4);
+            edges.add(e3_6);
+            edges.add(e6_5);
+            edges.add(e6_8);
+            edges.add(e4_5);
+            edges.add(e4_7);
+            edges.add(e1_8);
+        }
+        protected Graph<Integer> graph=new Graph<>(Graph.TYPE.DIRECTED,vertices,edges);        
+    }
     
 }
