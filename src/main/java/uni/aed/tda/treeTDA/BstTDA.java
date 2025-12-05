@@ -1,160 +1,113 @@
 package uni.aed.tda.treeTDA;
 
+import uni.aed.tda.linkedlistTDA.LinkedListTDA;
+import uni.aed.tda.listTDA.IteratorTDA;
+import uni.aed.tda.listTDA.ListTDA;
 import uni.aed.tda.queueTDA.LinkedQueueTDA;
 import uni.aed.tda.queueTDA.QueueTDA;
 
-public class BstTDA<E extends Comparable<E>> {
-    private static final int NOT_FOUND=-1;
-    private static final int FOUND=1;
-    private static final int IS_EMPTY=0;
-    private BstNodeTDA<E> root;
-
+public class BstTDA<E extends Comparable<E>> {    
+    public static final int NOT_FOUND=-1;
+    public static final int IS_EMPTY=0;
+    public static final int FOUND=1;    
+    protected BstNodeTDA<E> root;
+    
     public BstTDA() {
-        this.root=null;
+        this.root = null;
+    }      
+
+    public BstNodeTDA<E> getRoot() {
+        return root;
     }
     
     public void add(E e){
-        BstNodeTDA<E> p =root;
-        BstNodeTDA<E> prev =null;
+        BstNodeTDA<E> p = root;
+        BstNodeTDA<E> prev = null;
         while(p!=null){
+            prev=p;
+            if(p.getKey().compareTo(e)<0)
+                p=p.getRight();
+            else    
+                p=p.getLeft();
+        }
+        if(root==null)
+            root=new BstNodeTDA(e);
+        else if(prev.getKey().compareTo(e) < 0)
+            prev.setRight(new BstNodeTDA(e));
+        else
+            prev.setLeft(new BstNodeTDA(e));
+        
+        updateHeightsAndFB(root);
+    }    
+    
+    //Eliminacion por fusion(simetrico)
+    public int deleteByMerging(E e ){
+        BstNodeTDA<E> tmp;        
+        BstNodeTDA<E> node,p=root,prev=null;        
+        while(p!=null && p.getKey().compareTo(e)!=0){
             prev=p;
             if(p.getKey().compareTo(e)<0)
                 p=p.getRight();
             else
                 p=p.getLeft();
         }
-        if(root==null)
-            root=new BstNodeTDA<>(e);
-        else if(prev.getKey().compareTo(e)<0)
-            prev.setRight(new BstNodeTDA<>(e));
-        else
-            prev.setLeft(new BstNodeTDA<>(e));            
-    }
-    
-    public BstNodeTDA<E> search(E e){
-        return search(root,e);
-    }
-    private BstNodeTDA<E> search(BstNodeTDA<E> p, E e){
-        while(p!=null){
-             if(p.getKey().compareTo(e)==0)//son iguales
-                 return p;
-             else if(p.getKey().compareTo(e)<0)
-                    p=p.getRight();
-             else
-                    p=p.getLeft();
-        }
-        return null;
-    }
-    public void visit(BstNodeTDA<E> p, StringBuilder str){
-        if(p==null){
-            str.append(NOT_FOUND);
-            return;
-        }
-        if(!str.isEmpty())
-            str.append(",");
-        str.append(p.getKey());
-    }
-    //recorrido del arbol - primero en profundidad
-    //inorder(LVR)
-    public void inorder(StringBuilder str){
-        inorder(root,str);
-    }
-    private void inorder(BstNodeTDA<E> p, StringBuilder str){
-        if(p!=null){
-            inorder(p.getLeft(),str);//(L)
-            visit(p,str);           //(V)
-            inorder(p.getRight(),str);//(R)            
-        }
-    }
-    
-    public void visit(BstNodeTDA<E> p,StringBuilder str, String patron){
-        if(p==null){
-            str.append(NOT_FOUND);
-            return;
-        }
-        if (!str.isEmpty()) 
-            str.append(patron);  
-        str.append(p.getKey());        
-    }
-    //LVR
-    public void inorder(StringBuilder str, String patron){
-        inorder(root,str,patron);
-    }
-    private void inorder(BstNodeTDA<E> p,StringBuilder str, String patron){
-        if(p!=null){
-            inorder(p.getLeft(),str,patron);
-            visit(p,str,patron);
-            inorder(p.getRight(),str,patron);
-        }        
-    }
-    //preorder(VLR)
-    public void preorder(StringBuilder str){
-        preorder(root,str);
-    }
-    private void preorder(BstNodeTDA<E> p, StringBuilder str){
-        if(p!=null){
-            visit(p,str);           //(V)
-            preorder(p.getLeft(),str);//(L)            
-            preorder(p.getRight(),str);//(R)            
-        }
-    }
-    
-    //postorder(LRV)
-    public void postorder(StringBuilder str){
-        postorder(root,str);
-    }
-    private void postorder(BstNodeTDA<E> p, StringBuilder str){
-        if(p!=null){            
-            postorder(p.getLeft(),str);//(L)            
-            postorder(p.getRight(),str);//(R)            
-            visit(p,str);           //(V)
-        }
-    }
-    //recorrido primero en amplitud
-    public void breadthFirst(StringBuilder str){
-        BstNodeTDA<E> p=root;
-        QueueTDA<BstNodeTDA<E>> q= new LinkedQueueTDA<>();
-        if(p!=null){
-            q.enqueue(p);
-            while(!q.isEmpty()){
-                p=q.dequeue();
-                visit(p,str);
-                if(p.getLeft()!=null)
-                    q.enqueue(p.getLeft());
-                if(p.getRight()!=null)
-                    q.enqueue(p.getRight());
+        node=p;
+        if(p!=null && p.getKey().compareTo(e)==0){
+            if(node.getRight()==null)
+                node=node.getLeft();
+            else if (node.getLeft()==null)
+                node=node.getRight();
+            else{
+                tmp=node.getLeft();
+                while(tmp.getRight()!=null){
+                    tmp=tmp.getRight();
+                }
+                tmp.setRight(node.getRight());
+                node=node.getLeft();
             }
+            if(p==root)
+                root=node;
+            else if(prev.getLeft()==p)
+                prev.setLeft(node);
+            else
+                prev.setRight(node);
         }
+        else if(root!=null)
+            return NOT_FOUND;
+            //System.out.println("El valor no se encuentra en el arbol");
+        else
+            return IS_EMPTY;
+            //System.out.println("El arbol esta vacio");
+        updateHeightsAndFB(root);
+        return FOUND;
     }
     
-    //Eliminacion por copiado
+    //Eliminacion por copiado(simetrico)
     public int deleteByCopying(E e){
         BstNodeTDA<E> tmp;
-        BstNodeTDA<E> node,p=root,prev=null,previous;
+        BstNodeTDA<E> node,p=root,prev=null, previous;
         //buscamos el nodo a eliminar
         while(p!=null && p.getKey().compareTo(e)!=0){
-            prev=p; //reservamos p
+            prev=p;
             if(p.getKey().compareTo(e)<0)
                 p=p.getRight();
             else
-                p=p.getLeft();            
+                p=p.getLeft();
         }
         node=p;
         if(p!=null && p.getKey()==e){//encontro el elemento a eliminar
-            if(node.getRight()==null)//verificamos si no tiene hijo derecho
+            if(node.getRight()==null)//no tiene hijo derecho
                 node=node.getLeft();
-            else if(node.getLeft()==null)//verificamos si no tiene hijo izquierdo
+            else if (node.getLeft()==null)//no tiene hijo izq
                 node=node.getRight();
             else{//el nodo tiene dos hijos
-                tmp=node.getLeft(); //reservamos el nodo izq(uno de los hijos)
+                tmp=node.getLeft();
                 previous=node;
-                //ubicamos la rama derecha de la rama izq del nodo a eliminar
-                while(tmp.getRight()!=null){
+                while(tmp.getRight()!=null){//rama derecha de la rama izq del nodo a eliminar
                     previous=tmp;
                     tmp=tmp.getRight();
                 }
-                //copiamos el nodo derecho mas extremo de la rama izq del nodo a eliminar
-                node.setKey(tmp.getKey());
+                node.setKey(tmp.getKey());//copiamos el nodo derecho mas extremo de la rama izq del nodo con dos hijos a eliminar
                 if(previous==node)
                     previous.setLeft(tmp.getLeft());
                 else
@@ -162,56 +115,18 @@ public class BstTDA<E extends Comparable<E>> {
             }
             if(p==root)
                 root=node;
-            else if(p==prev.getLeft())
+            else if(prev.getLeft()==p)
                 prev.setLeft(node);
             else
                 prev.setRight(node);
-        }else if(root!=null)//si no encontro el elemento a eliminar en el arbol
-            return NOT_FOUND;
-        else
-            return IS_EMPTY;        
-        return FOUND;        
-    }
-    
-    //Eliminacion por copiado
-    public int deleteByMerging(E e){
-        BstNodeTDA<E> tmp;
-        BstNodeTDA<E> node,p=root,prev=null;
-        //buscamos el nodo a eliminar
-        while(p!=null && p.getKey().compareTo(e)!=0){
-            prev=p; //reservamos p
-            if(p.getKey().compareTo(e)<0)
-                p=p.getRight();
-            else
-                p=p.getLeft();            
-        }        
-        node=p;
-        if(p!=null && p.getKey().compareTo(e)==0){//encontro el elemento a eliminar
-            if(node.getRight()==null)
-                node=node.getLeft();
-            else if (node.getLeft()==null)
-                node=node.getRight();
-            else{//tiene los dos hijos
-                tmp=node.getLeft();
-                while(tmp.getRight()!=null)
-                    tmp=tmp.getRight();                
-                //se ubico el nodo derecho mas extremo de la rama izq 
-                //y se le establece como node derecho el nodo derecho 
-                //del nodo a eliminar(sobreposicion)
-                tmp.setRight(node.getRight());
-                node=node.getLeft();
-            }
-            if (p==root)
-                root=node;
-            else if (prev.getLeft()==p)
-                prev.setLeft(node);
-            else
-                prev.setRight(node);
-        }else if (root!=null)
-            return NOT_FOUND;
+        }
+        else if(root!=null)//no encontro el elemento a elimnar en el arbol
+            return NOT_FOUND;            
         else
             return IS_EMPTY;
-        return FOUND;        
+            
+        updateHeightsAndFB(root);
+        return FOUND;
     }
     
     // Eliminacion por fusion (asimetricamente: usa el sucesor)
@@ -257,6 +172,7 @@ public class BstTDA<E extends Comparable<E>> {
         else
             prev.setRight(node);
         
+        updateHeightsAndFB(root);
         return FOUND;
     }
     
@@ -313,8 +229,136 @@ public class BstTDA<E extends Comparable<E>> {
             return NOT_FOUND;
         else
             return IS_EMPTY;
+        
+        updateHeightsAndFB(root);
         return FOUND;
     }
+    
+    public BstNodeTDA<E> search(E e){
+        return search(root,e);
+    }
+    public BstNodeTDA<E> search(BstNodeTDA<E> p, E e){
+        while(p!=null){            
+            if(e.compareTo(p.getKey())==0)
+                return p;
+            else if(e.compareTo(p.getKey())<0)
+                p=p.getLeft();
+            else
+                p=p.getRight();
+        }
+        return null;
+    }
+    
+    public void visit(BstNodeTDA<E> p,StringBuilder str){
+        if(p==null){
+            str.append(NOT_FOUND);
+            return;
+        }
+        if (!str.isEmpty()) 
+            str.append(",");  
+        str.append(p.getKey());        
+    }
+    
+    public void visit(BstNodeTDA<E> p,StringBuilder str, String patron){
+        if(p==null){
+            str.append(NOT_FOUND);
+            return;
+        }
+        if (!str.isEmpty()) 
+            str.append(patron);  
+        str.append(p.getKey());        
+    }
+    //LVR
+    public void inorder(StringBuilder str, String patron){
+        inorder(root,str,patron);
+    }
+    private void inorder(BstNodeTDA<E> p,StringBuilder str, String patron){
+        if(p!=null){
+            inorder(p.getLeft(),str,patron);
+            visit(p,str,patron);
+            inorder(p.getRight(),str,patron);
+        }        
+    }
+    
+     //Resuelve 4PC:VisualizarArbol Final: LVR inorder
+    public BstTDA<E> inorder(){
+        BstTDA<E> bst=new BstTDA<>();
+        ListTDA<E> lista=new LinkedListTDA<>();
+        inorder(root,lista);
+        IteratorTDA<E> it=lista.iterador();        
+        while(it.hasNext()){            
+            E e=it.next();    
+            bst.add(e);
+        }
+        return bst;
+    }
+    private void inorder(BstNodeTDA<E> p,ListTDA<E> l){
+        if(p!=null){
+            inorder(p.getLeft(),l);
+            l.add(p.getKey());            
+            inorder(p.getRight(),l);}
+    }
+    //LVR inorder
+    public void inorder(StringBuilder str){
+        preorder(root,str);
+    }
+    public void inorder(BstNodeTDA<E> p,StringBuilder str){//VLR
+        if(p!=null){            
+            preorder(p.getLeft(),str);
+            visit(p,str);
+            preorder(p.getRight(),str);}
+    }
+    
+    //VLR preorder
+    public void preorder(StringBuilder str){
+        preorder(root,str);
+    }
+    public void preorder(BstNodeTDA<E> p,StringBuilder str){//VLR
+        if(p!=null){
+            visit(p,str);
+            preorder(p.getLeft(),str);
+            preorder(p.getRight(),str);}
+    }
+    
+    //LRV postorder
+    public void postorder(StringBuilder str){//LRV
+        postorder(root,str);
+    }
+    public void postorder(BstNodeTDA<E> p,StringBuilder str){//LRV
+        if(p!=null){            
+            postorder(p.getLeft(),str);
+            postorder(p.getRight(),str);
+            visit(p,str);   
+        }         
+    }
+     //recorrido primero en amplitud
+    public void breadthFirst(StringBuilder str){
+        BstNodeTDA<E> p=root;
+        QueueTDA<BstNodeTDA> queue= new LinkedQueueTDA();
+        if(p!=null){
+            queue.enqueue(p);
+            while(!queue.isEmpty()){
+                p=queue.dequeue();
+                visit(p,str);
+                if(p.getLeft()!=null)
+                    queue.enqueue(p.getLeft());
+                if(p.getRight()!=null)
+                    queue.enqueue(p.getRight());                    
+            }
+        }
+    }    
+    
+    private int updateHeightsAndFB(BstNodeTDA<E> node) {
+        if (node == null) return 0;
+
+        int leftH = updateHeightsAndFB(node.getLeft());
+        int rightH = updateHeightsAndFB(node.getRight());
+
+        node.setFb(rightH-leftH);
+
+        return Math.max(leftH, rightH) + 1;
+    }
+
     
     // Calcular la Longitud de Ruta Interna (IPL)
     public long calcularIPL() {
@@ -366,9 +410,8 @@ public class BstTDA<E extends Comparable<E>> {
         // El arbol esta balanceado si la diferencia de alturas no es mayor a 1 y ambos subarboles son balanceados
         return Math.abs(rightHeight-leftHeight) <= 1 && isBalancedRecursivo(node.getLeft()) && isBalancedRecursivo(node.getRight());
     }
-
     @Override
-    public String toString() {
-        return root.toString();
-    }  
+    public String toString() {        
+        return root.toString();        
+    }   
 }
