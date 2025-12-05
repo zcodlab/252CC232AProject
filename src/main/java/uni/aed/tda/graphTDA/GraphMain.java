@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 import uni.aed.tda.graphTDA.DataGraph.UndirectedGraph;
 import uni.aed.tda.graphTDA.recubrimiento.Kruskal;
+import uni.aed.tda.graphTDA.recubrimiento.Prim;
 import uni.aed.tda.graphTDA.shortestpath.CostPathPair;
 import uni.aed.tda.graphTDA.shortestpath.Dijkstra;
 
@@ -26,13 +27,15 @@ public class GraphMain {
                 "1.- Grafo No Dirigido "+SEPARADOR+                                            
                 "2.- Dijkstra No Dirigido "+SEPARADOR+                                            
                 "3.- Kruskal: Arbol de expansion minima "+SEPARADOR+                                            
-                "4.- Salir "+SEPARADOR+"Elija una opcion:");                
+                "4.- Prim: Arbol de expansion minima "+SEPARADOR+                                            
+                "5.- Salir "+SEPARADOR+"Elija una opcion:");                
                 opcion =scr.nextInt();            
                 switch (opcion)
                 {
                     case 1 -> {getUndirectedGraph();}                                                          
                     case 2 -> {getDijkstraUndirected();}                                                          
                     case 3 -> {getKruskal();}                                                          
+                    case 4 -> {getPrim();}                                                          
                     default -> {break;}
                 }	            
                 System.out.print("Para continuar con las operaciones pulsa S; Para finalizar pulse N: ");
@@ -75,5 +78,12 @@ public class GraphMain {
         DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();          
         CostPathPair<Integer> path = Kruskal.getMinimumSpanningTree(undirectedGraph.graph);
         System.out.println("Kruskal: Arbol de Expansion minima: " + path);
+    }
+     private void getPrim(){
+        System.out.println("Algoritmo de Prim");
+        DataGraph.UndirectedGraph undirectedGraph=new UndirectedGraph();          
+        Vertex<Integer> start=undirectedGraph.v1;
+        CostPathPair<Integer> path = Prim.getMinimumSpanningTree(undirectedGraph.graph,start);
+        System.out.println("Prim: Arbol de Expansion minima: " + path);
     }
 }
