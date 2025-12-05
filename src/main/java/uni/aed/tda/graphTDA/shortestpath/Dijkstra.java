@@ -20,6 +20,8 @@ public class Dijkstra<T extends Comparable<T>> {
     //metodo que determina la ruta mas corta
     public Map<Vertex<T>,CostPathPair<T>>
             getShortestPaths(Graph<T> graph, Vertex<T> start ){
+        if(graph==null)
+           throw (new NullPointerException("El Grafo no puede ser Nulo"));   
         //hashmap de vertices y sus aristas
         Map<Vertex<T>,List<Edge<T>>> paths = new HashMap<>();
         //hashmap de vertices y sus costos
@@ -39,6 +41,24 @@ public class Dijkstra<T extends Comparable<T>> {
         }
         return map;
     }
+    
+    public CostPathPair<T> getShortestPaths(Graph<T> graph, Vertex<T> start, Vertex<T> end ){
+        if(graph==null)
+           throw (new NullPointerException("El Grafo no puede ser Nulo"));   
+        if(start==null || end==null)
+           throw (new NullPointerException("El vertice inicial o final no puede ser Nulo"));     
+        //algoritmo de Dijkstra ponderado y no negativo
+        boolean hasNegativeEdge = checkForNegativeEdges(graph.getAllVertices());
+        if(hasNegativeEdge)
+            throw (new IllegalArgumentException("Aristas con costos negativos no estan permitidos"));
+        //hashmap de vertices y sus aristas
+        Map<Vertex<T>,List<Edge<T>>> paths = new HashMap<>();
+        //hashmap de vertices y sus costos
+        Map<Vertex<T>,CostVertexPair<T>> costs = new HashMap<>();
+        //llamada al metodo sobrecargado getshrotestpath con 4 parametros
+        return getShortestPath(graph,start,end,paths,costs);
+    }
+            
     private CostPathPair<T>
             getShortestPath(Graph<T> graph, Vertex<T> start, Vertex<T> end,
             Map<Vertex<T>,List<Edge<T>>> paths,
