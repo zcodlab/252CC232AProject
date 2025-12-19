@@ -8,62 +8,57 @@ import uni.aed.tda.graphTDA.Vertex;
 /* Ordenamiento topologico aplica a grafos dirigidos
 * considera las aristas salientes en el ordenamiento topologico
 */
-public class TopologicalSort {
+public class TopologicalSort<T extends Comparable<T>> {
+
     public TopologicalSort() {
     }
-    public static final List<Vertex<Integer>>
-                sort(Graph<Integer> graph){
+    public List<Vertex<T>> sort(Graph<T> graph){
         if(graph==null)
-           throw (new NullPointerException("El Grafo no puede ser Nulo"));         
-        //Grafo debe ser dirigido
+            throw (new NullPointerException("Grafo no puede ser nulo")); 
         if(graph.getType()!=Graph.TYPE.DIRECTED)
-            throw (new IllegalArgumentException("El Grafo debe ser Dirigido"));            
-        //Realizamos una copia del grafo que ingresa como parametro
-        Graph<Integer> clone = new Graph<>(graph);
-        //Declara una List de vertices clasificados
-        List<Vertex<Integer>> sorted=new ArrayList<>();
-        //Declara una List de vertices sin trayectorias(aristas) salientes
-        List<Vertex<Integer>> sinTraySaliente=new ArrayList<>();
-        //Declara una List de aristas
-        List<Edge<Integer>> edges=new ArrayList<>();
-        //descargarmos la coleccion de aristas en la edges
+            throw (new IllegalArgumentException("El Grafo debe ser Dirigido"));
+        //Realizamos una copia del Grafo que ingresa como parametro
+        final Graph<T> clone=new Graph<>(graph);
+        //Lista de nodos clasificados
+        final List<Vertex<T>> sorted= new ArrayList<>();
+        //Lista de nodos sin arista salientes
+        final List<Vertex<T>> nOutgoing= new ArrayList<>();
+        //Lista de aristas
+        final List<Edge<T>> edges= new ArrayList<>();
+        //descargamos la coleccion de aristas en la lista edges
         edges.addAll(clone.getAllEdges());
-        for(Vertex<Integer> v: clone.getAllVertices()){
-            //si no tiene aristas o trayectorias salientes entonces
-            //consignamos el vertice en la lista de vertices sinTrayectoriaSaliente
+        //ubicar los vertices que no tienen aristas salientes
+        for(Vertex<T> v: clone.getAllVertices()){
+            //si no tiene aristas lo consignamos en la lista de vertices sin aristas salientes
             if(v.getEdges().isEmpty())
-                sinTraySaliente.add(v);
+                nOutgoing.add(v);
         }
-        //mientras se tenga vertices sin trayectorias salientes
-        while(!sinTraySaliente.isEmpty()){
-            Vertex<Integer> current=sinTraySaliente.remove(0);
-            //despues de removerlo de la lista de vertices sin trayectoria
-            //lo agregamos a la lista de vertices clasificados
+        //mientras tenemos vertices que no tiene aristas salientes, solo aristas entrantes
+        while(!nOutgoing.isEmpty()){
+            final Vertex<T> current=nOutgoing.remove(0);
             sorted.add(current);
-            //eliminar todas aristas del vertices removido
+            //eliminar las aristas del vertice removido de nOutgoing
             int i=0;
             while(i<edges.size()){
-                //recuperar la arista de la posicion
-                Edge<Integer> e=edges.get(i);
-                //determinar los vertices origen y destino de la arista
-                Vertex<Integer> from= e.getFromVertex();
-                Vertex<Integer> to= e.getToVertex();
+                //recuperamos la arista de la posicion
+                final Edge<T> e=edges.get(i);
+                //determinar el vertice origen de la arista
+                final Vertex<T> from = e.getFromVertex();
+                final Vertex<T> to = e.getToVertex();
+                //ubicar la arista hacia el vertice actual
                 if(to.equals(current)){
                     edges.remove(e);
                     from.getEdges().remove(e);
                 }else
                     i++;
-                //si el numero de aristas del vertice origen(from) se quedo si aristas
-                //salientes entonces los agregamos a la lista sinTraySaliente
+                //si el numero de aristas del vertice origen se quedo sin aristas salientes                
+                //entonces lo agregamos a la lista nOutgoing
                 if(from.getEdges().isEmpty())
-                    sinTraySaliente.add(from);
-            }//end while interno
-        }//end while externo
-        if(!edges.isEmpty())
+                    nOutgoing.add(from);
+            }
+        }
+        if(!edges.isEmpty())//si la lista de aristas no esta vacia, debe haber algun error
             return null;
-        //retornamos la clasificacion topologica realizada
-        return sorted;
+        return sorted;//retornamos la clasificacion topologica realizada
     }
-    
-    
 }

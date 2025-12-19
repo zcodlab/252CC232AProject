@@ -94,8 +94,9 @@ public class GraphMain {
     
     private void getTopologicalSort(){
         System.out.println("Algoritmo de Ordenamiento Topologico");
-        DataGraph.DirectedGraph directedGraph=new DirectedGraph();          
-        List<Vertex<Integer>> result=TopologicalSort.sort(directedGraph.graph);
+        DataGraph.DirectedGraph directedGraph=new DirectedGraph(); 
+        TopologicalSort<Integer> topologicalSort = new TopologicalSort<>();
+        List<Vertex<Integer>> result=topologicalSort.sort(directedGraph.graph);        
         System.out.println("Resultado del Ordenamiento Topologico:\n"+result.toString() );
     }
 }
