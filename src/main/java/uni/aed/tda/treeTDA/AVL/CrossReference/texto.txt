@@ -1,0 +1,5 @@
+El documento de texto es 
+hola mundo java estructuras
+uni computadora software
+hardware base de datos
+hola mundo base de datos

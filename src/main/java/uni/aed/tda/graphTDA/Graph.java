@@ -61,6 +61,74 @@ public class Graph<T extends Comparable<T>> {
     public TYPE getType() {
         return type;
     }
+    
+    protected void addVertex(T key) {
+        allVertices.add(new Vertex<>(key));
+    }
+
+    protected void addVertex(Vertex<T> v) {
+        allVertices.add(v);
+    }
+    
+    public boolean removeVertex(T key) {
+        Vertex<T> v = searchVertex(key);
+        if (v == null) return false;
+
+        // 1. Eliminar todas las aristas donde participa el vertice
+        List<Edge<T>> eliminar = new ArrayList<>();
+        for (Edge<T> e : allEdges) {
+            if (e.getFromVertex().getValue().compareTo(key) == 0 ||
+                e.getToVertex().getValue().compareTo(key) == 0) {
+                eliminar.add(e);
+            }
+        }
+
+        for (Edge<T> e : eliminar) {
+            allEdges.remove(e);
+            e.getFromVertex().removeEdge(e);
+            e.getToVertex().removeEdge(e);
+        }
+
+        // 2. Eliminar el vertice del grafo
+        allVertices.remove(v);
+        return true;
+    }
+
+   
+    public Vertex<T> searchVertex(T key) {
+        for (Vertex<T> v : allVertices) {
+            if (v.getValue().compareTo(key) == 0)
+                return v;            
+        }
+        return null;
+    }
+
+    public void addEdge(T desde, T hacia, int costo) {
+        Vertex<T> v1 = searchVertex(desde);
+        Vertex<T> v2 = searchVertex(hacia);
+        if (v1 == null) {
+            v1 = new Vertex<>(desde);
+            addVertex(v1);
+        }
+        if (v2 == null) {
+            v2 = new Vertex<>(hacia);
+            addVertex(v2);
+        }
+        Edge<T> e = new Edge<>(costo, v1, v2);
+        allEdges.add(e);
+        v1.addEdge(e);
+    }
+    
+    public List<T> searchAdyacentes(T key) {
+        List<T> adyacentes = new ArrayList<>();
+        Vertex<T> v = searchVertex(key);
+        if (v == null) return adyacentes;
+
+        for (Edge<T> e : v.getEdges()) {
+            adyacentes.add(e.getToVertex().getValue());
+        }
+        return adyacentes;
+    }
 
     @Override
     public String toString() {

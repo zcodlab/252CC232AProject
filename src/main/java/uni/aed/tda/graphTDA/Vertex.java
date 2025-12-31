@@ -42,6 +42,10 @@ public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>>{
     public void addEdge(Edge<T> e){
         edges.add(e);
     }
+    
+    public void removeEdge(Edge<T> e) {
+        edges.remove(e);
+    }
     /*metodo que retorna una arista que tiene como destino el vertice
     indicado como parametro
     */

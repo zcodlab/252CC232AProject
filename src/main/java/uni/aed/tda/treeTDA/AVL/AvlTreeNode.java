@@ -3,14 +3,16 @@ package uni.aed.tda.treeTDA.AVL;
 public class AvlTreeNode<E> {
     private E key;
     private int height;
-    private AvlTreeNode<E> left, right;
-    private static final String SEPARADOR="\n";
+    private int fb; //FACTOR DE BALANCE
+    private AvlTreeNode<E> left;
+    private AvlTreeNode<E> right;
+    private static final String SEPARADOR = "\n";    
 
     public AvlTreeNode(E key) {
         this.key = key;
         this.height=1;
         this.left=null;
-        this.right=null;
+        this.right=null;        
     }
 
     public void setKey(E key) {
@@ -21,13 +23,18 @@ public class AvlTreeNode<E> {
         this.height = height;
     }
 
+    public void setFb(int fb) {
+        this.fb = fb;
+    }
+    
+
     public void setLeft(AvlTreeNode<E> left) {
         this.left = left;
     }
 
     public void setRight(AvlTreeNode<E> right) {
         this.right = right;
-    }
+    }   
 
     public E getKey() {
         return key;
@@ -37,6 +44,10 @@ public class AvlTreeNode<E> {
         return height;
     }
 
+    public int getFb() {
+        return fb;
+    }    
+    
     public AvlTreeNode<E> getLeft() {
         return left;
     }
@@ -44,27 +55,35 @@ public class AvlTreeNode<E> {
     public AvlTreeNode<E> getRight() {
         return right;
     }
-    private void print(StringBuilder buffer,String prefix,String childrenPrefix){
-        buffer.append(prefix);
-        buffer.append(key);
-        buffer.append(SEPARADOR);
-        
-        //logica de visualizacion del subarbol izquierdo
-        if(left!=null && right!=null){
-            //existen ambos hijos
-            left.print(buffer, childrenPrefix+"---", childrenPrefix+"   ");
-            right.print(buffer, childrenPrefix+"+++", childrenPrefix+"|  ");
-        }else if(left!=null)
-            //solo tiene hijo izq
-            left.print(buffer, childrenPrefix+"---", childrenPrefix+"   ");
-        else if (right!=null)
-            right.print(buffer, childrenPrefix+"+++", childrenPrefix+"|  ");
-    }            
 
+    public static String getSEPARADOR() {
+        return SEPARADOR;
+    }   
+    
+    private void print(StringBuilder buffer, String prefix, String childrenPrefix) {
+        // Escribe el nodo actual
+        buffer.append(prefix);
+        //buffer.append(key);
+        buffer.append(key).append(" (h=").append(height).append("|").append("fb=").append(fb).append(")");
+        buffer.append(SEPARADOR);
+
+        // Lógica de impresión del subárbol izquierdo
+        if (left != null && right != null) {
+            // Ambos hijos existen
+            left.print(buffer, childrenPrefix + "---", childrenPrefix + "   ");
+            right.print(buffer, childrenPrefix + "+++", childrenPrefix + "|   ");
+        } else if (left != null)
+            // Solo hijo izquierdo
+            left.print(buffer, childrenPrefix + "---", childrenPrefix + "   ");
+        else if (right != null)
+            // Solo hijo derecho
+            right.print(buffer, childrenPrefix + "+++", childrenPrefix + "   ");        
+    }
+    
     @Override
-    public String toString() {
+    public String toString(){
         StringBuilder buffer=new StringBuilder();
         print(buffer,"","");
         return buffer.toString();
-    }
+    }  
 }
